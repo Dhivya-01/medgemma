@@ -18,13 +18,13 @@ i18n
     
     ns: [
       'common',      // Add this - IMPORTANT!
-      'navbar',
+     
       'login',
       'dashboard',
       'document',
-      'analytics',
+     
       'admin',
-      'settings',
+ 
       'user',
       'upload',
       'project'
