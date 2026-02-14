@@ -28,7 +28,7 @@
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: var(--color-red-800);
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
@@ -49,6 +49,25 @@
 
     --font-display: 'Space Grotesk', system-ui, sans-serif;
     --font-body: 'Inter', system-ui, sans-serif;
+    --success: var(--color-emerald-500);
+    --success-foreground: var(--color-emerald-900);
+    --info: var(--color-violet-500);
+    --info-foreground: var(--color-violet-900);
+    --warning: var(--color-yellow-500);
+    --warning-foreground: var(--color-yellow-900);
+    --invert: var(--color-zinc-900);
+    --invert-foreground: var(--color-zinc-50);
+  }
+  .dark {
+    --destructive-foreground: var(--color-red-600);
+    --success: var(--color-emerald-500);
+    --success-foreground: var(--color-emerald-600);
+    --info: var(--color-violet-500);
+    --info-foreground: var(--color-violet-600);
+    --warning: var(--color-yellow-500);
+    --warning-foreground: var(--color-yellow-600);
+    --invert: var(--color-zinc-700);
+    --invert-foreground: var(--color-zinc-50);
   }
 }
 
@@ -128,4 +147,139 @@
     0% { transform: scale(1); opacity: 0.5; }
     100% { transform: scale(2.5); opacity: 0; }
   }
+}
+
+
+.auth-btn {
+  @apply w-full py-3 rounded-lg border border-border hover:bg-muted transition;
+}
+
+.input {
+  @apply flex items-center gap-3 border border-border rounded-lg px-3 py-3;
+}
+
+.input input {
+  @apply bg-transparent outline-none w-full;
+}
+
+.primary-btn {
+  @apply py-3 rounded-lg font-semibold text-white;
+  background: var(--gradient-accent);
+}
+
+.divider {
+  @apply text-center text-xs text-muted-foreground relative;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  @apply absolute top-1/2 w-1/3 h-px bg-border;
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+
+
+
+#root {
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+
+
+/* === Action Buttons (Theme Aware) === */
+
+.btn {
+  @apply flex items-center gap-2 py-1.5 px-3 rounded-lg text-sm font-medium transition-all duration-200;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+}
+
+.btn:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+}
+
+/* Primary (Download / Apply / Main Actions) */
+.btn-primary {
+  background: var(--gradient-accent);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+
+/* Secondary (Report / Neutral actions) */
+.btn-secondary {
+  background: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+/* Danger (Delete) */
+.btn-danger {
+  background: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+  border: none;
+}
+
+.btn-danger:hover {
+  filter: brightness(1.05);
+}
+
+/* Disabled State */
+.btn-disabled {
+  @apply cursor-not-allowed opacity-50;
+  background: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  box-shadow: none;
+  transform: none;
+}
+
+/* Icon refresh animation colorized */
+.icon-action {
+  color: hsl(var(--muted-foreground));
+  @apply transition-colors duration-200 cursor-pointer;
+}
+
+.icon-action:hover {
+  color: hsl(var(--accent));
+}
+
+.icon-action.loading {
+  color: hsl(var(--accent));
+}
+
+
+/* === MUI Theme Bridge === */
+
+.MuiCheckbox-root {
+  color: hsl(var(--muted-foreground)) !important;
+}
+.MuiTableRow-root {
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+
+.MuiCheckbox-root.Mui-checked {
+  color: hsl(var(--accent)) !important;
+}
+
+.MuiTableCell-root {
+  border-bottom: 1px solid hsl(var(--border)) !important;
+  color: hsl(var(--foreground));
+  font-family: var(--font-body);
+}
+
+.MuiTablePagination-root {
+  color: hsl(var(--foreground));
+}
+
+.MuiSelect-select {
+  background: hsl(var(--card));
 }
