@@ -32,7 +32,7 @@ i18n
     defaultNS: 'common', // Changed from 'navbar'
     
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      loadPath: 'public/locales/{{lng}}/{{ns}}.json',
     },
     
     detection: {
