@@ -3,7 +3,7 @@ import { Shield, WifiOff, Lock, Server, Eye } from "lucide-react";
 
 const PrivacySection = () => {
   return (
-    <div className="section-container">
+    <div className="">
       <div className="absolute inset-0 bg-gradient-to-tl from-secondary/50 via-background to-background" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -60,39 +60,38 @@ const PrivacySection = () => {
           viewport={{ once: true }}
         >
           <div className="text-sm font-semibold text-accent tracking-wide uppercase mb-4">
-            Privacy & Security
+            ENTERPRISE DEPLOYMENT
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-            Your data stays <span className="gradient-text">yours</span>
+            Seamless Integration. <span className="gradient-text">Total Control.</span>
           </h2>
 
           <p className="text-muted-foreground text-lg leading-relaxed mb-10">
-            Full offline capability. Zero-knowledge architecture.
-            Patient data never leaves your device unless you choose to share.
+            AIRNotes isn't just software; it's a secure appliance. We deploy directly within your hospital's firewall, integrating with your existing PACS/RIS systems. You get state-of-the-art AI that operates with full offline capability and zero data exfiltration.
           </p>
 
           <div className="space-y-4">
             {[
               {
                 icon: WifiOff,
-                title: "Offline Mode",
-                desc: "Full AI capabilities without internet connection",
+                title: "Local Inference Engine",
+                desc: "Runs entirely on your hardware (Docker/On-prem). No internet needed for reporting.",
               },
               {
                 icon: Lock,
-                title: "End-to-End Encryption",
-                desc: "AES-256 encryption for all data at rest and in transit",
+                title: "Encrypted Model Shipping",
+                desc: "Receive smarter model updates securely without opening inbound ports.",
               },
               {
                 icon: Server,
-                title: "On-Premise Deploy",
-                desc: "Run entirely on your own infrastructure",
+                title: "PACS Interoperability",
+                desc: "Native integration with HL7, FHIR, and standard hospital databases.",
               },
               {
                 icon: Eye,
-                title: "Zero-Knowledge",
-                desc: "We can't see your data, even if we wanted to",
+                title: "Audit-Ready Compliance",
+                desc: "ull logging of every AI suggestion and human edit for HIPAA verification.",
               },
             ].map((item, i) => {
               const Icon = item.icon; // JSX-safe dynamic component

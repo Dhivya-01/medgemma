@@ -31,6 +31,33 @@ const viewerRef = useRef(null);
 
   const dragStart = useRef({ x: 0, y: 0 });
 
+
+  const resetViewer = useCallback(() => {
+  setZoom(1);
+  setRotation(0);
+  setPosition({ x: 0, y: 0 });
+  setIsFullscreen(false);
+}, []);
+
+
+useEffect(() => {
+  const handleKeyDown = (e) => {
+    // Only act when fullscreen is active
+    if (!isFullscreen) return;
+
+    if (e.key === "Tab") {
+      e.preventDefault(); // prevent focus jumping
+      resetViewer();
+    }
+  };
+
+  window.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    window.removeEventListener("keydown", handleKeyDown);
+  };
+}, [isFullscreen, resetViewer]);
+
   /* ---------------- FETCH IMAGES ---------------- */
 
   const fetchAllImages = useCallback(async (paths) => {
@@ -171,7 +198,17 @@ useEffect(() => {
         <button className="btn" onClick={zoomOut}><ZoomOut size={16} /></button>
         <button className="btn" onClick={rotate}><RotateCw size={16} /></button>
         <button className="btn" onClick={handleDownload}><Download size={16} /></button>
-        <button className="btn" onClick={() => setIsFullscreen(!isFullscreen)}>
+      <button
+  className="btn"
+  onClick={() => {
+    if (isFullscreen) {
+      resetViewer();
+    } else {
+      setIsFullscreen(true);
+    }
+  }}
+>
+
           {isFullscreen ? <Minimize2 size={16}/> : <Maximize2 size={16}/>}
         </button>
       </div>

@@ -677,369 +677,889 @@ export default function DashboardPage() {
     }
   }, [searchState?.bucket_type]);
 
-  return (
-    <div className="p-4 overflow-auto">
-      <div className=" p-2 space-y-2">
+//   return (
+//     <div className="p-4 overflow-auto">
+//       <div className=" p-2 space-y-2">
         
-        {/* Filter 1 */}
-        <LoadingOverlay />
-        <div className="flex justify-between items-center gap-2 pr-6">
+//         {/* Filter 1 */}
+//         <LoadingOverlay />
+//         <div className="flex justify-between items-center gap-2 pr-6">
           
-          {/* Search Icon for Serial ID search */}
-          <div className="flex items-start gap-5">
-            {selected.length !== 0 ? (
-              <div className="flex items-center gap-5">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="button"
-                  onClick={() => handleInstance(true)}
-                  className="!min-w-[8rem]"
-                >
-                  {t('btn_delete_instance')}
-                </Button>
-                <Button
-                  variant="contained"
-                  color="success"
-                  // className="btn btn-primary"
-                  type="button"
-                  onClick={() => handleApprove(true)}
-                  // className="!min-w-[8rem]"
-                >
-                  {t('btn_approve')}
-                </Button>
-                <Button
-                  variant="contained"
-                  color="error"
-                  type="button"
-                  onClick={() => handleApprove(false)}
-                  className="!min-w-[8rem]"
-                >
-                  {t('btn_reject')}
-                </Button>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </div>
-          {/* <h1 className="flex justify-between items-center">Dashboard page</h1> */}
-          <div className="flex items-center items-center gap-2">
-            <IconButton
-              onClick={() => setSearchDialogOpen(true)}
-              // style={{ color: "#1976d2" }}
-              className="icon-action"
-            >
-              <FaSearch size={20} />
-            </IconButton>
-            <FaHistory
-              size={20}
-              style={{
-                margin: "10px",
-                fontWeight: "bolder",
-                cursor: "pointer",
-              }}
-              onClick={fetchData}
-            />
+//           {/* Search Icon for Serial ID search */}
+//           <div className="flex items-start gap-5">
+//             {selected.length !== 0 ? (
+//               <div className="flex items-center gap-5">
+//                 <Button
+//                   variant="contained"
+//                   color="primary"
+//                   type="button"
+//                   onClick={() => handleInstance(true)}
+//                   className="!min-w-[8rem]"
+//                 >
+//                   {t('btn_delete_instance')}
+//                 </Button>
+//                 <Button
+//                   variant="contained"
+//                   color="success"
+//                   // className="btn btn-primary"
+//                   type="button"
+//                   onClick={() => handleApprove(true)}
+//                   // className="!min-w-[8rem]"
+//                 >
+//                   {t('btn_approve')}
+//                 </Button>
+//                 <Button
+//                   variant="contained"
+//                   color="error"
+//                   type="button"
+//                   onClick={() => handleApprove(false)}
+//                   className="!min-w-[8rem]"
+//                 >
+//                   {t('btn_reject')}
+//                 </Button>
+//               </div>
+//             ) : (
+//               <div></div>
+//             )}
+//           </div>
+//           {/* <h1 className="flex justify-between items-center">Dashboard page</h1> */}
+//           <div className="flex items-center items-center gap-2">
+//             <IconButton
+//               onClick={() => setSearchDialogOpen(true)}
+//               // style={{ color: "#1976d2" }}
+//               className="icon-action"
+//             >
+//               <FaSearch size={20} />
+//             </IconButton>
+//             <FaHistory
+//               size={20}
+//               style={{
+//                 margin: "10px",
+//                 fontWeight: "bolder",
+//                 cursor: "pointer",
+//               }}
+//               onClick={fetchData}
+//             />
 
-            <Button
-              onClick={() => {
-                setCurrentApproveStatus("false");
-                dispatch(
-                  setSearch({
-                    confidence_flag: "All",
-                    approve_status: "false",
-                    page_number: 1,
-                    process_status: "true",
-                    bucket_type: "All",
-                  })
-                );
-              }}
-              variant={nonApprovedBool ? "contained" : "outlined"}
-              style={{
-                backgroundColor: nonApprovedBool ? "#FFC107" : "",
-                color: nonApprovedBool ? "black" : "#FFC107",
-                borderColor: "#FFC107",
-              }}
-              type="button"
-            >
-              {t('btn_not_approved')}
-            </Button>
+//             <Button
+//               onClick={() => {
+//                 setCurrentApproveStatus("false");
+//                 dispatch(
+//                   setSearch({
+//                     confidence_flag: "All",
+//                     approve_status: "false",
+//                     page_number: 1,
+//                     process_status: "true",
+//                     bucket_type: "All",
+//                   })
+//                 );
+//               }}
+//               variant={nonApprovedBool ? "contained" : "outlined"}
+//               style={{
+//                 backgroundColor: nonApprovedBool ? "#FFC107" : "",
+//                 color: nonApprovedBool ? "black" : "#FFC107",
+//                 borderColor: "#FFC107",
+//               }}
+//               type="button"
+//             >
+//               {t('btn_not_approved')}
+//             </Button>
 
-            <Button
-              onClick={() => {
-                setCurrentApproveStatus("true");
-                dispatch(
-                  setSearch({
-                    approve_status: "true",
-                    confidence_flag: "All",
-                    page_number: 1,
-                    process_status: "true",
-                    bucket_type: "All",
-                  })
-                );
-              }}
-              variant={approvedBool ? "contained" : "outlined"}
-              color="success"
-              // className="btn btn-primary"
-              type="button"
-            >
-              {t('btn_approved')}
-            </Button>
-            <Button
-              onClick={() => {
-                dispatch(
-                  setSearch({
-                    confidence_flag: "All",
-                    approve_status: "All",
-                    page_number: 1,
-                    process_status: "All",
-                    bucket_type: "All",
-                  })
-                );
-              }}
-              variant={allFilesBool ? "contained" : "outlined"}
-              type="button"
-            >
-              {t('btn_all_files')}
-            </Button>
-          </div>
-        </div>
-        <div className="flex justify-between items-center gap-2 mt-2">
-          <div className="flex  items-center gap-2 mt-4">
-            <div className="flex justify-between items-center gap-10 mr-2 ml-2 ">
+//             <Button
+//               onClick={() => {
+//                 setCurrentApproveStatus("true");
+//                 dispatch(
+//                   setSearch({
+//                     approve_status: "true",
+//                     confidence_flag: "All",
+//                     page_number: 1,
+//                     process_status: "true",
+//                     bucket_type: "All",
+//                   })
+//                 );
+//               }}
+//               variant={approvedBool ? "contained" : "outlined"}
+//               color="success"
+//               // className="btn btn-primary"
+//               type="button"
+//             >
+//               {t('btn_approved')}
+//             </Button>
+//             <Button
+//               onClick={() => {
+//                 dispatch(
+//                   setSearch({
+//                     confidence_flag: "All",
+//                     approve_status: "All",
+//                     page_number: 1,
+//                     process_status: "All",
+//                     bucket_type: "All",
+//                   })
+//                 );
+//               }}
+//               variant={allFilesBool ? "contained" : "outlined"}
+//               type="button"
+//             >
+//               {t('btn_all_files')}
+//             </Button>
+//           </div>
+//         </div>
+//         <div className="flex justify-between items-center gap-2 mt-2">
+//           <div className="flex  items-center gap-2 mt-4">
+//             <div className="flex justify-between items-center gap-10 mr-2 ml-2 ">
          
-              {/* Date Picker - Updated version */}
-<div ref={datePickerRef} className="relative">
-  <div className="flex items-center gap-2">
-     <label>{t('label_date')}</label>
-    <TextField
-      type="text"
-      value={`${moment(searchState.start_date).format(
-        "D MMM YYYY"
-      )} ~ ${moment(searchState.end_date).format("D MMM YYYY")}`}
-      onClick={() => setIsOpen(!isOpen)}
-      placeholder={t('placeholder_select_date')}
-      // size="small"
-       className="bg-card rounded-lg"
-      style={{ cursor: "pointer" }}
-      autoComplete="off"
-      InputProps={{ readOnly: true }}
-    />
-  </div>
-  {isOpen && (
-    <div className="absolute z-[999] mt-2 shadow-lg bg-white rounded-lg">
-      <DateRangePicker
-        onChange={(item) => {
-          setState([item.selection]);
-          // Don't auto-close or dispatch - let user complete selection
-        }}
-        showSelectionPreview={true}
-        moveRangeOnFirstSelection={false}
-        months={2}
-        ranges={state}
-        direction="horizontal"
-        className="bg-white"
-        locale={currentLocale}
-      />
-      <div className="flex justify-end gap-2 p-3 border-t bg-white">
-        <Button 
-          onClick={() => setIsOpen(false)} 
-          size="small"
-          variant="outlined"
-        >
-          {t('btn_cancel')}
-        </Button>
-        <Button 
-          onClick={() => {
-            const start_date = moment(state[0].startDate).format("YYYY-MM-DD");
-            const end_date = moment(state[0].endDate).format("YYYY-MM-DD");
-            dispatch(
-              setSearch({ 
-                start_date, 
-                end_date, 
-                page_number: 1 // Reset to page 1
-              })
-            );
-            setIsOpen(false);
-          }} 
-          size="small"
-          variant="contained"
-          color="primary"
-        >
-          {t('btn_apply')}
-        </Button>
-      </div>
-    </div>
-  )}
-</div>
-            </div>
-            <div className="flex items-center mr-2">
-              <label className="m-2">{t('label_type')}</label>
-              <Autocomplete
-                value={searchState.data_type}
-                size="small"
-                onChange={(event, newValue) => {
-                  dispatch(setSearch({ data_type: newValue, page_number: 0 }));
-                }}
-                options={dataTypes}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    size="small"
-                    className="!min-w-[12rem]"
-                  />
-                )}
-                disableClearable
-              />
-            </div>
+//               {/* Date Picker - Updated version */}
+// <div ref={datePickerRef} className="relative">
+//   <div className="flex items-center gap-2">
+//      <label>{t('label_date')}</label>
+//     <TextField
+//       type="text"
+//       value={`${moment(searchState.start_date).format(
+//         "D MMM YYYY"
+//       )} ~ ${moment(searchState.end_date).format("D MMM YYYY")}`}
+//       onClick={() => setIsOpen(!isOpen)}
+//       placeholder={t('placeholder_select_date')}
+//       // size="small"
+//        className="bg-card rounded-lg"
+//       style={{ cursor: "pointer" }}
+//       autoComplete="off"
+//       InputProps={{ readOnly: true }}
+//     />
+//   </div>
+//   {isOpen && (
+//     <div className="absolute z-[999] mt-2 shadow-lg bg-white rounded-lg">
+//       <DateRangePicker
+//         onChange={(item) => {
+//           setState([item.selection]);
+//           // Don't auto-close or dispatch - let user complete selection
+//         }}
+//         showSelectionPreview={true}
+//         moveRangeOnFirstSelection={false}
+//         months={2}
+//         ranges={state}
+//         direction="horizontal"
+//         className="bg-white"
+//         locale={currentLocale}
+//       />
+//       <div className="flex justify-end gap-2 p-3 border-t bg-white">
+//         <Button 
+//           onClick={() => setIsOpen(false)} 
+//           size="small"
+//           variant="outlined"
+//         >
+//           {t('btn_cancel')}
+//         </Button>
+//         <Button 
+//           onClick={() => {
+//             const start_date = moment(state[0].startDate).format("YYYY-MM-DD");
+//             const end_date = moment(state[0].endDate).format("YYYY-MM-DD");
+//             dispatch(
+//               setSearch({ 
+//                 start_date, 
+//                 end_date, 
+//                 page_number: 1 // Reset to page 1
+//               })
+//             );
+//             setIsOpen(false);
+//           }} 
+//           size="small"
+//           variant="contained"
+//           color="primary"
+//         >
+//           {t('btn_apply')}
+//         </Button>
+//       </div>
+//     </div>
+//   )}
+// </div>
+//             </div>
+//             <div className="flex items-center mr-2">
+//               <label className="m-2">{t('label_type')}</label>
+//               <Autocomplete
+//                 value={searchState.data_type}
+//                 size="small"
+//                 onChange={(event, newValue) => {
+//                   dispatch(setSearch({ data_type: newValue, page_number: 0 }));
+//                 }}
+//                 options={dataTypes}
+//                 renderInput={(params) => (
+//                   <TextField
+//                     {...params}
+//                     variant="outlined"
+//                     size="small"
+//                     className="!min-w-[12rem]"
+//                   />
+//                 )}
+//                 disableClearable
+//               />
+//             </div>
 
-            <div className="mr-2 ml-2">
-              {t('label_all_files')}  {tableState.totalItemCount}
-            </div>
-            <div className="flex items-center">
-              <label className="m-2">{t('label_bucket_type')}</label>
-              <Select
-                value={searchState?.bucket_type }
-                size="small"
-                onChange={(e) => {
-                  const newBucketType = e.target.value;
+//             <div className="mr-2 ml-2">
+//               {t('label_all_files')}  {tableState.totalItemCount}
+//             </div>
+//             <div className="flex items-center">
+//               <label className="m-2">{t('label_bucket_type')}</label>
+//               <Select
+//                 value={searchState?.bucket_type }
+//                 size="small"
+//                 onChange={(e) => {
+//                   const newBucketType = e.target.value;
 
-                  // Create a new search state object with the updated bucket type
-                  const newSearchState = {
-                    ...searchState,
-                    bucket_type: newBucketType,
-                    page_number: 1,
-                  };
+//                   // Create a new search state object with the updated bucket type
+//                   const newSearchState = {
+//                     ...searchState,
+//                     bucket_type: newBucketType,
+//                     page_number: 1,
+//                   };
 
-                  // Dispatch the update
-                  dispatch(setSearch(newSearchState));
-                }}
-                className="!min-w-[8rem]"
-              >
-                {bucketTypes.map((item, i) => (
-                  <MenuItem key={i} value={item.value}>
-                    {item.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </div>
+//                   // Dispatch the update
+//                   dispatch(setSearch(newSearchState));
+//                 }}
+//                 className="!min-w-[8rem]"
+//               >
+//                 {bucketTypes.map((item, i) => (
+//                   <MenuItem key={i} value={item.value}>
+//                     {item.label}
+//                   </MenuItem>
+//                 ))}
+//               </Select>
+//             </div>
+//           </div>
+//           <div className="flex items-center gap-2">
+//             <Button
+//               onClick={() => {
+//                 dispatch(
+//                   setSearch({
+//                     confidence_flag: "GREEN",
+//                     approve_status: currentApproveStatus, // Use current approve status
+//                     page_number: 1,
+//                     process_status: "true",
+//                     bucket_type: "All",
+//                   })
+//                 );
+//               }}
+//               variant={greenBool ? "contained" : "outlined"}
+//               color="success"
+//               // className="btn btn-primary"
+//               type="button"
+//             >
+//               {t('btn_green')}
+//             </Button>
+//             <Button
+//               onClick={() => {
+//                 dispatch(
+//                   setSearch({
+//                     confidence_flag: "RED",
+//                     approve_status: currentApproveStatus, // Use current approve status
+//                     page_number: 1,
+//                     process_status: "true",
+//                     bucket_type: "All",
+//                   })
+//                 );
+//               }}
+//               variant={redBool ? "contained" : "outlined"}
+//               color="error"
+//               type="button"
+//             >
+//               {t('btn_red')}
+//             </Button>
+//             <Button
+//               onClick={() => {
+//                 dispatch(
+//                   setSearch({
+//                     approve_status: currentApproveStatus, // Use current approve status
+//                     confidence_flag: "All",
+//                     page_number: 1,
+//                     process_status: "false",
+//                     bucket_type: "Sys-Reject",
+//                   })
+//                 );
+//               }}
+//               variant={disapprovedBool ? "contained" : "outlined"}
+//               color="error"
+//               type="button"
+//             >
+//               {t('btn_reject_status')}
+//             </Button>
+//           </div>
+//         </div>
+//       </div>
+//       <Dialog open={searchDialogOpen} onClose={handleClose}>
+//         <div
+//           className="bg-white rounded-lg shadow-lg w-96 mx-auto p-4"
+//           style={{ width: "600px" }}
+//         >
+//           <div className="flex items-center justify-between mb-2">
+//             <h2 className="text-black text-lg font-semibold">
+//               {t('dialog_search_title')}
+//             </h2>
+//             <button
+//               onClick={handleClose}
+//               className="text-gray-500 hover:text-gray-700"
+//             >
+//               <X className="h-5 w-5" />
+//             </button>
+//           </div>
+//           <div className="mb-4">
+//             <TextField
+//               id="serialId"
+//               multiline
+//               rows={10}
+//               value={serialIdToSearch}
+//               onChange={(e) => setSerialIdToSearch(e.target.value)}
+//               placeholder={t('placeholder_serial_id')}
+//               fullWidth
+//               className="text-base overflow-auto"
+//               style={{ maxHeight: "400px", overflowY: "auto" }}
+//             />
+//             <p className="text-xs text-gray-500 mt-1">
+//               {t('dialog_serial_id_help')}
+//             </p>
+//           </div>
+//           <div className="flex justify-end gap-2">
+//             <Button
+//               variant="outlined"
+//               onClick={handleClose}
+//               className="px-4 py-1 text-sm"
+//             >
+//               {t('btn_cancel')}
+//             </Button>
+//             <Button
+//               variant="contained"
+//               color="primary"
+//               onClick={handleSearchBySerialId}
+//               className="px-4 py-1 text-sm bg-blue-600"
+//             >
+//               {t('btn_search')}
+//             </Button>
+//           </div>
+//         </div>
+//       </Dialog>
+
+//       <br />
+
+//       {/* Filter 2 */}
+// <div className="overflow-y-auto max-h-[100vh]">
+//       <CustomTable
+//         selected={selected}
+//         setSelected={setSelected}
+//         handleApprove={handleApprove}
+//         visibleColumns={visibleColumns}
+//         setVisibleColumns={setVisibleColumns}
+//         headCells={headCells}
+//       />
+//       </div>
+//     </div>
+//   );
+
+// index.jsx — Dashboard Page (Filter Header + Table)
+// Improved layout: structured header zones, responsive for medium screens
+
+return (
+  <div
+    style={{
+   
+      background: "var(--bg-page, #f0f4f8)",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+    }}
+  >
+    {/* ── Loading Overlay (kept as-is) ── */}
+    <LoadingOverlay />
+
+    {/* ═══════════════════════════════════════════════════
+        ZONE 1 — TOP ACTION BAR
+        Left:  page title + bulk actions (conditional)
+        Right: utility icons + approval status filters
+    ═══════════════════════════════════════════════════ */}
+    <div
+      style={{
+        background: "#fff",
+        borderBottom: "1.5px solid #e2e8f0",
+        padding: "12px 20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+        gap: 10,
+      }}
+    >
+      {/* ── Left: Title + conditional bulk action buttons ── */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        {/* Page identity — fills the empty space when nothing is selected */}
+        <div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: "#0f172a", letterSpacing: "-0.2px", lineHeight: 1.2 }}>
+            Instance Manager
           </div>
-          <div className="flex items-center gap-2">
-            <Button
-              onClick={() => {
-                dispatch(
-                  setSearch({
-                    confidence_flag: "GREEN",
-                    approve_status: currentApproveStatus, // Use current approve status
-                    page_number: 1,
-                    process_status: "true",
-                    bucket_type: "All",
-                  })
-                );
-              }}
-              variant={greenBool ? "contained" : "outlined"}
-              color="success"
-              // className="btn btn-primary"
-              type="button"
-            >
-              {t('btn_green')}
-            </Button>
-            <Button
-              onClick={() => {
-                dispatch(
-                  setSearch({
-                    confidence_flag: "RED",
-                    approve_status: currentApproveStatus, // Use current approve status
-                    page_number: 1,
-                    process_status: "true",
-                    bucket_type: "All",
-                  })
-                );
-              }}
-              variant={redBool ? "contained" : "outlined"}
-              color="error"
-              type="button"
-            >
-              {t('btn_red')}
-            </Button>
-            <Button
-              onClick={() => {
-                dispatch(
-                  setSearch({
-                    approve_status: currentApproveStatus, // Use current approve status
-                    confidence_flag: "All",
-                    page_number: 1,
-                    process_status: "false",
-                    bucket_type: "Sys-Reject",
-                  })
-                );
-              }}
-              variant={disapprovedBool ? "contained" : "outlined"}
-              color="error"
-              type="button"
-            >
-              {t('btn_reject_status')}
-            </Button>
+          <div style={{ fontSize: 11.5, color: "#94a3b8", marginTop: 2 }}>
+            Document pipeline overview
           </div>
         </div>
-      </div>
-      <Dialog open={searchDialogOpen} onClose={handleClose}>
-        <div
-          className="bg-white rounded-lg shadow-lg w-96 mx-auto p-4"
-          style={{ width: "600px" }}
-        >
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-black text-lg font-semibold">
-              {t('dialog_search_title')}
-            </h2>
-            <button
-              onClick={handleClose}
-              className="text-gray-500 hover:text-gray-700"
+
+        {/* Vertical divider — only show when actions are visible */}
+        {selected.length !== 0 && (
+          <div style={{ width: 1, height: 28, background: "#e2e8f0", flexShrink: 0 }} />
+        )}
+
+        {/* Bulk actions — appear inline next to title when rows are selected */}
+        {selected.length !== 0 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+            <span
+              style={{
+                fontSize: 11.5,
+                color: "#3b82f6",
+                background: "#eff6ff",
+                padding: "3px 10px",
+                borderRadius: 20,
+                fontWeight: 600,
+                border: "1px solid #bfdbfe",
+              }}
             >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-          <div className="mb-4">
-            <TextField
-              id="serialId"
-              multiline
-              rows={10}
-              value={serialIdToSearch}
-              onChange={(e) => setSerialIdToSearch(e.target.value)}
-              placeholder={t('placeholder_serial_id')}
-              fullWidth
-              className="text-base overflow-auto"
-              style={{ maxHeight: "400px", overflowY: "auto" }}
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              {t('dialog_serial_id_help')}
-            </p>
-          </div>
-          <div className="flex justify-end gap-2">
-            <Button
-              variant="outlined"
-              onClick={handleClose}
-              className="px-4 py-1 text-sm"
-            >
-              {t('btn_cancel')}
-            </Button>
+              {selected.length} selected
+            </span>
             <Button
               variant="contained"
               color="primary"
-              onClick={handleSearchBySerialId}
-              className="px-4 py-1 text-sm bg-blue-600"
+              size="small"
+              type="button"
+              onClick={() => handleInstance(true)}
+              sx={{ textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5 }}
             >
-              {t('btn_search')}
+              {t("btn_delete_instance")}
+            </Button>
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              type="button"
+              onClick={() => handleApprove(true)}
+              sx={{ textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5 }}
+            >
+              {t("btn_approve")}
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              type="button"
+              onClick={() => handleApprove(false)}
+              sx={{ textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5 }}
+            >
+              {t("btn_reject")}
             </Button>
           </div>
+        )}
+      </div>
+
+      {/* ── Right: Utility icons + Approval status filters ── */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+        {/* Search icon */}
+        <IconButton
+          onClick={() => setSearchDialogOpen(true)}
+          size="small"
+          sx={{
+            border: "1.5px solid #e2e8f0",
+            borderRadius: "8px",
+            width: 34,
+            height: 34,
+            color: "#64748b",
+            "&:hover": { background: "#f8fafc", borderColor: "#cbd5e1" },
+          }}
+        >
+          <FaSearch size={15} />
+        </IconButton>
+
+        {/* Refresh / history */}
+        <IconButton
+          onClick={fetchData}
+          size="small"
+          sx={{
+            border: "1.5px solid #e2e8f0",
+            borderRadius: "8px",
+            width: 34,
+            height: 34,
+            color: "#64748b",
+            "&:hover": { background: "#f8fafc", borderColor: "#cbd5e1" },
+          }}
+        >
+          <FaHistory size={15} />
+        </IconButton>
+
+        <div style={{ width: 1, height: 22, background: "#e2e8f0" }} />
+
+        {/* NOT APPROVED */}
+        <Button
+          onClick={() => {
+            setCurrentApproveStatus("false");
+            dispatch(
+              setSearch({
+                confidence_flag: "All",
+                approve_status: "false",
+                page_number: 1,
+                process_status: "true",
+                bucket_type: "All",
+              })
+            );
+          }}
+          variant={nonApprovedBool ? "contained" : "outlined"}
+          size="small"
+          type="button"
+          sx={{
+            textTransform: "none",
+            fontWeight: 600,
+            borderRadius: "8px",
+            fontSize: 12.5,
+            backgroundColor: nonApprovedBool ? "#f59e0b" : "transparent",
+            color: nonApprovedBool ? "#fff" : "#d97706",
+            borderColor: "#f59e0b",
+            "&:hover": { backgroundColor: "#f59e0b", color: "#fff", borderColor: "#f59e0b" },
+          }}
+        >
+          {t("btn_not_approved")}
+        </Button>
+
+        {/* APPROVED */}
+        <Button
+          onClick={() => {
+            setCurrentApproveStatus("true");
+            dispatch(
+              setSearch({
+                approve_status: "true",
+                confidence_flag: "All",
+                page_number: 1,
+                process_status: "true",
+                bucket_type: "All",
+              })
+            );
+          }}
+          variant={approvedBool ? "contained" : "outlined"}
+          color="success"
+          size="small"
+          type="button"
+          sx={{
+            textTransform: "none",
+            fontWeight: 600,
+            borderRadius: "8px",
+            fontSize: 12.5,
+          }}
+        >
+          {t("btn_approved")}
+        </Button>
+
+        {/* ALL FILES */}
+        <Button
+          onClick={() => {
+            dispatch(
+              setSearch({
+                confidence_flag: "All",
+                approve_status: "All",
+                page_number: 1,
+                process_status: "All",
+                bucket_type: "All",
+              })
+            );
+          }}
+          variant={allFilesBool ? "contained" : "outlined"}
+          size="small"
+          type="button"
+          sx={{
+            textTransform: "none",
+            fontWeight: 600,
+            borderRadius: "8px",
+            fontSize: 12.5,
+          }}
+        >
+          {t("btn_all_files")}
+        </Button>
+      </div>
+    </div>
+
+    {/* ═══════════════════════════════════════════════════
+        ZONE 2 — FILTER BAR
+        Left:  Date | Type | All-files count | Bucket Type
+        Right: GREEN / RED / REJECT confidence filters
+    ═══════════════════════════════════════════════════ */}
+    <div
+      style={{
+        background: "#fff",
+        borderBottom: "1px solid #e2e8f0",
+        padding: "10px 20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+        gap: 10,
+      }}
+    >
+      {/* ── Left filter group ── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          flexWrap: "wrap",
+        }}
+      >
+        {/* Date Range Picker */}
+        <div ref={datePickerRef} style={{ position: "relative" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <span
+              style={{
+                fontSize: 12,
+                color: "#64748b",
+                fontWeight: 600,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {t("label_date")}
+            </span>
+            <TextField
+              type="text"
+              value={`${moment(searchState.start_date).format("D MMM YYYY")} ~ ${moment(
+                searchState.end_date
+              ).format("D MMM YYYY")}`}
+              onClick={() => setIsOpen(!isOpen)}
+              placeholder={t("placeholder_select_date")}
+              size="small"
+              autoComplete="off"
+              InputProps={{ readOnly: true }}
+              sx={{
+                cursor: "pointer",
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                  fontSize: 12.5,
+                  cursor: "pointer",
+                  "& fieldset": { borderColor: "#e2e8f0" },
+                },
+                "& input": { cursor: "pointer" },
+                minWidth: 190,
+              }}
+            />
+          </div>
+          {isOpen && (
+            <div
+              style={{
+                position: "absolute",
+                zIndex: 999,
+                marginTop: 6,
+                boxShadow: "0 8px 32px rgba(0,0,0,.14)",
+                background: "#fff",
+                borderRadius: 12,
+                border: "1px solid #e2e8f0",
+              }}
+            >
+              <DateRangePicker
+                onChange={(item) => {
+                  setState([item.selection]);
+                }}
+                showSelectionPreview={true}
+                moveRangeOnFirstSelection={false}
+                months={2}
+                ranges={state}
+                direction="horizontal"
+                locale={currentLocale}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 8,
+                  padding: "10px 14px",
+                  borderTop: "1px solid #f1f5f9",
+                  background: "#fff",
+                  borderRadius: "0 0 12px 12px",
+                }}
+              >
+                <Button
+                  onClick={() => setIsOpen(false)}
+                  size="small"
+                  variant="outlined"
+                  sx={{ textTransform: "none", borderRadius: "7px", fontSize: 12 }}
+                >
+                  {t("btn_cancel")}
+                </Button>
+                <Button
+                  onClick={() => {
+                    const start_date = moment(state[0].startDate).format("YYYY-MM-DD");
+                    const end_date = moment(state[0].endDate).format("YYYY-MM-DD");
+                    dispatch(setSearch({ start_date, end_date, page_number: 1 }));
+                    setIsOpen(false);
+                  }}
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                  sx={{ textTransform: "none", borderRadius: "7px", fontSize: 12 }}
+                >
+                  {t("btn_apply")}
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
-      </Dialog>
 
-      <br />
+        {/* Type Autocomplete */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ fontSize: 12, color: "#64748b", fontWeight: 600, whiteSpace: "nowrap" }}>
+            {t("label_type")}
+          </span>
+          <Autocomplete
+            value={searchState.data_type}
+            size="small"
+            onChange={(event, newValue) => {
+              dispatch(setSearch({ data_type: newValue, page_number: 0 }));
+            }}
+            options={dataTypes}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                sx={{
+                  minWidth: 140,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "8px",
+                    fontSize: 12.5,
+                    "& fieldset": { borderColor: "#e2e8f0" },
+                  },
+                }}
+              />
+            )}
+            disableClearable
+          />
+        </div>
 
-      {/* Filter 2 */}
+        {/* Total file count badge */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 5,
+            background: "#f8fafc",
+            border: "1px solid #e2e8f0",
+            borderRadius: 8,
+            padding: "5px 12px",
+            fontSize: 12.5,
+            color: "#64748b",
+            fontWeight: 500,
+            whiteSpace: "nowrap",
+          }}
+        >
+          {t("label_all_files")}
+          <strong style={{ color: "#0f172a", marginLeft: 3 }}>{tableState.totalItemCount}</strong>
+        </div>
 
+        {/* Bucket Type */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ fontSize: 12, color: "#64748b", fontWeight: 600, whiteSpace: "nowrap" }}>
+            {t("label_bucket_type")}
+          </span>
+          <Select
+            value={searchState?.bucket_type}
+            size="small"
+            onChange={(e) => {
+              dispatch(setSearch({ ...searchState, bucket_type: e.target.value, page_number: 1 }));
+            }}
+            sx={{
+              minWidth: 110,
+              borderRadius: "8px",
+              fontSize: 12.5,
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#e2e8f0" },
+            }}
+          >
+            {bucketTypes.map((item, i) => (
+              <MenuItem key={i} value={item.value} sx={{ fontSize: 12.5 }}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+      </div>
+
+      {/* ── Right: Confidence flag filters ── */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+        <span
+          style={{
+            fontSize: 11,
+            color: "#94a3b8",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: 0.5,
+            whiteSpace: "nowrap",
+          }}
+        >
+          Confidence
+        </span>
+
+        <Button
+          onClick={() => {
+            dispatch(
+              setSearch({
+                confidence_flag: "GREEN",
+                approve_status: currentApproveStatus,
+                page_number: 1,
+                process_status: "true",
+                bucket_type: "All",
+              })
+            );
+          }}
+          variant={greenBool ? "contained" : "outlined"}
+          color="success"
+          size="small"
+          type="button"
+          sx={{ textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5 }}
+        >
+          {t("btn_green")}
+        </Button>
+
+        <Button
+          onClick={() => {
+            dispatch(
+              setSearch({
+                confidence_flag: "RED",
+                approve_status: currentApproveStatus,
+                page_number: 1,
+                process_status: "true",
+                bucket_type: "All",
+              })
+            );
+          }}
+          variant={redBool ? "contained" : "outlined"}
+          color="error"
+          size="small"
+          type="button"
+          sx={{ textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5 }}
+        >
+          {t("btn_red")}
+        </Button>
+
+        <Button
+          onClick={() => {
+            dispatch(
+              setSearch({
+                approve_status: currentApproveStatus,
+                confidence_flag: "All",
+                page_number: 1,
+                process_status: "false",
+                bucket_type: "Sys-Reject",
+              })
+            );
+          }}
+          variant={disapprovedBool ? "contained" : "outlined"}
+          color="error"
+          size="small"
+          type="button"
+          sx={{ textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5 }}
+        >
+          {t("btn_reject_status")}
+        </Button>
+      </div>
+    </div>
+
+    {/* ═══════════════════════════════════════════════════
+        ZONE 3 — TABLE AREA
+    ═══════════════════════════════════════════════════ */}
+    <div style={{ flex: 1, padding: "16px 20px", overflow: "auto" }}>
       <CustomTable
         selected={selected}
         setSelected={setSelected}
@@ -1049,5 +1569,88 @@ export default function DashboardPage() {
         headCells={headCells}
       />
     </div>
-  );
+
+    {/* ═══════════════════════════════════════════════════
+        SERIAL ID SEARCH DIALOG (unchanged logic)
+    ═══════════════════════════════════════════════════ */}
+    <Dialog open={searchDialogOpen} onClose={handleClose}>
+      <div
+        style={{
+          width: 560,
+          maxWidth: "95vw",
+          padding: 20,
+          borderRadius: 12,
+          background: "#fff",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 14,
+          }}
+        >
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#0f172a" }}>
+            {t("dialog_search_title")}
+          </h2>
+          <button
+            onClick={handleClose}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "#94a3b8",
+              display: "flex",
+              padding: 4,
+              borderRadius: 6,
+            }}
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        <TextField
+          id="serialId"
+          multiline
+          rows={10}
+          value={serialIdToSearch}
+          onChange={(e) => setSerialIdToSearch(e.target.value)}
+          placeholder={t("placeholder_serial_id")}
+          fullWidth
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "8px",
+              fontSize: 13,
+              "& fieldset": { borderColor: "#e2e8f0" },
+            },
+          }}
+        />
+        <p style={{ fontSize: 11.5, color: "#94a3b8", marginTop: 6 }}>
+          {t("dialog_serial_id_help")}
+        </p>
+
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginTop: 14 }}
+        >
+          <Button
+            variant="outlined"
+            onClick={handleClose}
+            sx={{ textTransform: "none", borderRadius: "8px", fontSize: 12.5 }}
+          >
+            {t("btn_cancel")}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSearchBySerialId}
+            sx={{ textTransform: "none", borderRadius: "8px", fontSize: 12.5 }}
+          >
+            {t("btn_search")}
+          </Button>
+        </div>
+      </div>
+    </Dialog>
+  </div>
+);
 }

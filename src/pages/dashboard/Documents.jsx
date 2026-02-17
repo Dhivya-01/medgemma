@@ -1,176 +1,3 @@
-// import { useState, useRef } from "react";
-// import { motion } from "framer-motion";
-// import { ZoomIn, ZoomOut, RotateCcw, ChevronLeft, ChevronRight, Check, X } from "lucide-react";
-
-// export default function DocumentDetails() {
-//   const [patientIndex, setPatientIndex] = useState(0);
-//   const [activeImage, setActiveImage] = useState(0);
-//   const [zoom, setZoom] = useState(1);
-//   const imageRef = useRef(null);
-
-//   // 👉 Replace later with API data
-//   const patients = [
-//     {
-//       name: "Patient A",
-//       images: ["/sample/doc1.jpg", "/sample/doc2.jpg"],
-//       findings: {
-//         confidence: "92%",
-//         impression:
-//           "No acute cardiopulmonary abnormality detected. Mild degenerative changes observed.",
-//       },
-//     },
-//     {
-//       name: "Patient B",
-//       images: ["/sample/doc3.jpg", "/sample/doc2.jpg"],
-//       findings: {
-//         confidence: "85%",
-//         impression: "Some minor irregularities observed. Recommend follow-up.",
-//       },
-//     },
-//   ];
-
-//   const currentPatient = patients[patientIndex];
-//   const images = currentPatient.images;
-//   const findings = currentPatient.findings;
-
-//   /* ---------------- ZOOM FUNCTIONS ---------------- */
-//   const zoomIn = () => setZoom((z) => Math.min(z + 0.2, 4));
-//   const zoomOut = () => setZoom((z) => Math.max(z - 0.2, 1));
-//   const resetZoom = () => setZoom(1);
-
-//   const handleWheel = (e) => {
-//     e.preventDefault();
-//     e.deltaY < 0 ? zoomIn() : zoomOut();
-//   };
-
-//   let lastTap = 0;
-//   const handleDoubleTap = () => {
-//     const now = Date.now();
-//     if (now - lastTap < 300) zoom === 1 ? setZoom(2) : resetZoom();
-//     lastTap = now;
-//   };
-
-//   /* ---------------- NAVIGATION ---------------- */
-//   const nextPatient = () => {
-//     if (patientIndex < patients.length - 1) {
-//       setPatientIndex((p) => p + 1);
-//       setActiveImage(0);
-//       resetZoom();
-//     }
-//   };
-
-//   const prevPatient = () => {
-//     if (patientIndex > 0) {
-//       setPatientIndex((p) => p - 1);
-//       setActiveImage(0);
-//       resetZoom();
-//     }
-//   };
-
-//   const approveDocument = () => alert(`Approved ${currentPatient.name}'s document`);
-//   const rejectDocument = () => alert(`Rejected ${currentPatient.name}'s document`);
-
-//   return (
-//     <div className="h-screen flex flex-col gap-4 p-4 md:p-6">
-//       {/* HEADER */}
-//       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-//         <h1 className="text-xl md:text-2xl font-semibold gradient-text">
-//           Document Analysis - {currentPatient.name}
-//         </h1>
-
-//         {/* Controls */}
-//         <div className="flex gap-2 mr-6">
-//           <button className="btn" onClick={zoomIn}><ZoomIn size={16} /></button>
-//           <button className="btn" onClick={zoomOut}><ZoomOut size={16} /></button>
-//           <button className="btn" onClick={resetZoom}><RotateCcw size={16} /></button>
-//         </div>
-//       </div>
-
-//       {/* MAIN LAYOUT */}
-//       <div className="flex flex-col lg:flex-row flex-1 gap-4 overflow-hidden">
-//         {/* IMAGE VIEWER */}
-//         <div
-//           className="glass-card flex-1 flex items-center justify-center overflow-hidden relative touch-none"
-//           onWheel={handleWheel}
-//           onClick={handleDoubleTap}
-//         >
-//           <motion.img
-//             ref={imageRef}
-//             key={activeImage}
-//             src={images[activeImage]}
-//             alt="document"
-//             animate={{ scale: zoom }}
-//             transition={{ duration: 0.25 }}
-//             className="max-h-full max-w-full object-contain"
-//           />
-
-//           {/* Zoom Indicator */}
-//           <div className="absolute bottom-2 right-2 text-xs bg-black/50 text-white px-2 py-1 rounded">
-//             {Math.round(zoom * 100)}%
-//           </div>
-
-//           {/* Patient Navigation */}
-//           <button
-//             onClick={prevPatient}
-//             disabled={patientIndex === 0}
-//             className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 p-2 rounded-full"
-//           >
-//             <ChevronLeft size={20} />
-//           </button>
-//           <button
-//             onClick={nextPatient}
-//             disabled={patientIndex === patients.length - 1}
-//             className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 p-2 rounded-full"
-//           >
-//             <ChevronRight size={20} />
-//           </button>
-//         </div>
-
-//         {/* FINDINGS PANEL */}
-//         <div className="glass-card w-full lg:w-[380px] p-4 md:p-6 overflow-y-auto flex flex-col gap-4">
-//           <h2 className="text-lg font-semibold mb-3">Findings</h2>
-
-//           <div className="p-4 rounded-xl bg-muted mb-4">
-//             <p className="text-sm text-muted-foreground">Confidence</p>
-//             <p className="text-xl font-semibold text-accent">{findings.confidence}</p>
-//           </div>
-
-//           <p className="text-sm text-muted-foreground mb-1">Impression</p>
-//           <p className="leading-relaxed">{findings.impression}</p>
-
-//           {/* Approve / Reject */}
-//           <div className="flex gap-2 mt-4">
-//             <button onClick={approveDocument} className="btn btn-accent flex-1">
-//               <Check size={16} className="mr-1" /> Approve
-//             </button>
-//             <button onClick={rejectDocument} className="btn btn-destructive flex-1">
-//               <X size={16} className="mr-1" /> Reject
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* THUMBNAILS */}
-//       <div className="glass-card p-2 flex gap-2 overflow-x-auto">
-//         {images.map((img, index) => (
-//           <button
-//             key={index}
-//             onClick={() => {
-//               setActiveImage(index);
-//               resetZoom();
-//             }}
-//             className={`min-w-[90px] h-[70px] rounded-md overflow-hidden border-2 transition
-//               ${activeImage === index ? "border-accent" : "border-transparent"}
-//             `}
-//           >
-//             <img src={img} className="w-full h-full object-cover" />
-//           </button>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
 
 
 
@@ -841,176 +668,572 @@ useEffect(() => {
   };
 
 
-  return (
-    <div className="h-screen flex flex-col gap-4 p-4 md:p-6">
-      {/* HEADER */}
-    {/* ===== TOP TOOLBAR ===== */}
-<div className="sticky top-0 z-50 glass-card  p-4 mr-4 flex items-center justify-between gap-2">
+//   return (
+//     <div className="h-screen flex flex-col gap-4 p-4 md:p-6 overflow-y-auto">
+//       {/* HEADER */}
+//     {/* ===== TOP TOOLBAR ===== */}
+// <div >
 
-  {/* LEFT — Dashboard */}
-  <button
-    onClick={() => navigate("/dashboard")}
-    className="flex items-center gap-1 text-sm md:text-base font-medium text-primary hover:underline whitespace-nowrap"
+//   {/* LEFT — Dashboard */}
+//   <button
+//     onClick={() => navigate("/dashboard")}
+//     className="flex items-center gap-1 text-sm md:text-base font-medium text-primary hover:underline whitespace-nowrap"
+//   >
+//     ← Dashboard
+//   </button>
+
+//   {/* CENTER — Document Title */}
+//   <h1 className="text-sm md:text-lg font-semibold text-center truncate flex-1">
+//     Document Analysis -  {tableState?.data[tableState.index]?.SerialID ||
+//               tableState?.currentId}
+//   </h1>
+
+//   {/* RIGHT — Navigation */}
+//   <div className="flex items-center gap-1 md:gap-2">
+
+//     <IconButton
+//       size="small"
+//       color="primary"
+//       disabled={searchState.page_number === 1 && tableState.index === 0}
+//       onClick={handlePrevious}
+//       className="!p-2"
+//     >
+//       <MdNavigateBefore className="text-xl md:text-2xl" />
+//     </IconButton>
+
+//     <span className="text-xs md:text-sm px-2 text-muted-foreground">
+//       {tableState.index + 1} / {tableState.totalItemCount}
+//     </span>
+
+//     <IconButton
+//       size="small"
+//       color="primary"
+//       disabled={
+//         searchState.page_number ===
+//           Math.ceil(tableState.totalItemCount / searchState.page_size) &&
+//         tableState.index === tableState.data.length - 1
+//       }
+//       onClick={handleNext}
+//       className="!p-2"
+//     >
+//       <MdNavigateNext className="text-xl md:text-2xl" />
+//     </IconButton>
+
+//   </div>
+// </div>
+
+
+//       {/* MAIN LAYOUT */}
+//      <div className="flex flex-col lg:flex-row flex-1 gap-4 overflow-hidden">
+
+//   {/* IMAGE SECTION (Handled Fully by ImageComponent) */}
+//   <div className="flex-1">
+//     {imageJson && (
+//      <ImageComponent
+//   jsonInput={jsonInput}
+//   setJsonInput={setJsonInput}
+//   setIsValidJson={setIsValidJson}
+//   jsonPath="data.image"
+//   imageJson={imageJson}
+// />
+
+//     )}
+//   </div>
+
+//   {/* FINDINGS PANEL */}
+// <div className="w-[420px] max-w-full overflow-y-auto p-5 space-y-4 bg-muted/30">
+//     <h2 className="text-lg font-semibold">Editable Findings</h2>
+
+//     {Object.entries(findings).map(([key, value]) => (
+//       <div key={key} className="space-y-1">
+//         <label className="text-sm text-muted-foreground capitalize">
+//           {key.replace(/_/g, " ")}
+//         </label>
+
+//         <textarea
+//           className="w-full p-3 rounded-lg border bg-background"
+//           rows={3}
+//           value={editableData[key] ?? value}
+//           onChange={(e) =>
+//             setEditableData((prev) => ({
+//               ...prev,
+//               [key]: e.target.value,
+//             }))
+//           }
+//         />
+//       </div>
+//     ))}
+
+// {/* Reject Reason */}
+// <div className="flex flex-col gap-3 pt-4 border-t">
+
+//   {!showRejectField ? (
+//     <div className="flex gap-2 ">
+//       <Button
+//         onClick={handleRejectClick}
+//          color="error"
+//           variant="contained"
+//           sx={{ minWidth: "4rem" }}
+//       >
+//         Reject
+//       </Button>
+
+//       <Button
+//         onClick={handleSave}
+//         color="success"
+//           variant="contained"
+//           sx={ {minWidth: "4rem" }}
+//       >
+//         Approve
+//       </Button>
+
+//       <Button
+//         onClick={handleSaveAndNext}
+//         disabled={!isValidJson}
+//         color="info"
+//           variant="contained"
+//           sx={{ minWidth: "4rem" }}
+//       >
+//         Approve & Next
+//       </Button>
+//     </div>
+//   ) : (
+//     <div className="space-y-2 p-4">
+//       <TextField
+//         fullWidth
+//         size="small"
+//         label="Reject Reason"
+//         value={approve_cmd}
+//         onChange={(e) => setApprove_cmd(e.target.value)}
+//         autoFocus
+//       />
+
+//       <div className="flex gap-2 pt-2">
+//         <Button
+//           onClick={() => setShowRejectField(false)}
+//         color="inherit"
+//           variant="contained"
+//           sx={{ minWidth: "4rem" }}
+//         >
+//           Cancel
+//         </Button>
+
+//         <Button
+//           onClick={handleReject}
+//           color="error"
+//           variant="contained"
+//           sx={{ minWidth: "4rem" }}
+//         >
+//           Confirm Reject
+//         </Button>
+//       </div>
+//     </div>
+//   )}
+// </div>
+
+//   </div>
+
+
+// </div>
+
+
+ 
+//     </div>
+//   );
+// documents/index.jsx — Document Analysis Page
+// Improved: structured toolbar, balanced two-column layout, responsive, medium-screen support
+
+// documents/index.jsx — Document Analysis Page
+// Improved: structured toolbar, balanced two-column layout, responsive, medium-screen support
+
+return (
+  <div
+    style={{
+      fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      background: "#f0f4f8",
+      overflow: "hidden",
+    }}
   >
-    ← Dashboard
-  </button>
 
-  {/* CENTER — Document Title */}
-  <h1 className="text-sm md:text-lg font-semibold text-center truncate flex-1">
-    Document Analysis -  {tableState?.data[tableState.index]?.SerialID ||
-              tableState?.currentId}
-  </h1>
-
-  {/* RIGHT — Navigation */}
-  <div className="flex items-center gap-1 md:gap-2">
-
-    <IconButton
-      size="small"
-      color="primary"
-      disabled={searchState.page_number === 1 && tableState.index === 0}
-      onClick={handlePrevious}
-      className="!p-2"
+    {/* ═══════════════════════════════════════════════════
+        TOP TOOLBAR
+        Left: ← Dashboard
+        Center: Document title + serial ID
+        Right: Prev counter Next
+    ═══════════════════════════════════════════════════ */}
+    <div
+      style={{
+        background: "#fff",
+        borderBottom: "1.5px solid #e2e8f0",
+        padding: "0 20px",
+        height: 52,
+        display: "grid",
+        gridTemplateColumns: "1fr auto 1fr",  /* equal left/right columns, center shrinks to content */
+        alignItems: "center",
+        flexShrink: 0,
+      }}
     >
-      <MdNavigateBefore className="text-xl md:text-2xl" />
-    </IconButton>
+      {/* ── Col 1: Back link + Prev/Counter/Next (left-aligned, grouped) ── */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        {/* Dashboard back link */}
+        <button
+          onClick={() => navigate("/dashboard")}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 5,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "#3b82f6",
+            fontSize: 13,
+            fontWeight: 600,
+            fontFamily: "inherit",
+            padding: "5px 10px",
+            borderRadius: 8,
+            whiteSpace: "nowrap",
+            transition: "background .15s",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#eff6ff")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+          Dashboard
+        </button>
 
-    <span className="text-xs md:text-sm px-2 text-muted-foreground">
-      {tableState.index + 1} / {tableState.totalItemCount}
-    </span>
+        {/* Thin divider between link and nav */}
+        <div style={{ width: 1, height: 18, background: "#e2e8f0", flexShrink: 0 }} />
 
-    <IconButton
-      size="small"
-      color="primary"
-      disabled={
-        searchState.page_number ===
-          Math.ceil(tableState.totalItemCount / searchState.page_size) &&
-        tableState.index === tableState.data.length - 1
-      }
-      onClick={handleNext}
-      className="!p-2"
-    >
-      <MdNavigateNext className="text-xl md:text-2xl" />
-    </IconButton>
+        {/* Prev / Counter / Next — sits right next to Dashboard */}
+        <IconButton
+          size="small"
+          color="primary"
+          disabled={searchState.page_number === 1 && tableState.index === 0}
+          onClick={handlePrevious}
+          sx={{
+            border: "1.5px solid #e2e8f0",
+            borderRadius: "8px",
+            width: 30,
+            height: 30,
+            "&:hover": { background: "#f8fafc" },
+            "&:disabled": { opacity: 0.35, borderColor: "#f1f5f9" },
+          }}
+        >
+          <MdNavigateBefore style={{ fontSize: 18 }} />
+        </IconButton>
 
-  </div>
-</div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 3,
+            padding: "2px 10px",
+            background: "#f8fafc",
+            border: "1.5px solid #e2e8f0",
+            borderRadius: 7,
+            fontSize: 12,
+            color: "#64748b",
+            fontWeight: 500,
+            whiteSpace: "nowrap",
+          }}
+        >
+          <strong style={{ color: "#0f172a" }}>{tableState.index + 1}</strong>
+          <span style={{ color: "#cbd5e1", margin: "0 1px" }}>/</span>
+          {tableState.totalItemCount}
+        </div>
 
-
-      {/* MAIN LAYOUT */}
-     <div className="flex flex-col lg:flex-row flex-1 gap-4 overflow-hidden">
-
-  {/* IMAGE SECTION (Handled Fully by ImageComponent) */}
-  <div className="flex-1">
-    {imageJson && (
-     <ImageComponent
-  jsonInput={jsonInput}
-  setJsonInput={setJsonInput}
-  setIsValidJson={setIsValidJson}
-  jsonPath="data.image"
-  imageJson={imageJson}
-/>
-
-    )}
-  </div>
-
-  {/* FINDINGS PANEL */}
-<div className="w-[420px] max-w-full overflow-y-auto p-5 space-y-4 bg-muted/30">
-    <h2 className="text-lg font-semibold">Editable Findings</h2>
-
-    {Object.entries(findings).map(([key, value]) => (
-      <div key={key} className="space-y-1">
-        <label className="text-sm text-muted-foreground capitalize">
-          {key.replace(/_/g, " ")}
-        </label>
-
-        <textarea
-          className="w-full p-3 rounded-lg border bg-background"
-          rows={3}
-          value={editableData[key] ?? value}
-          onChange={(e) =>
-            setEditableData((prev) => ({
-              ...prev,
-              [key]: e.target.value,
-            }))
+        <IconButton
+          size="small"
+          color="primary"
+          disabled={
+            searchState.page_number ===
+              Math.ceil(tableState.totalItemCount / searchState.page_size) &&
+            tableState.index === tableState.data.length - 1
           }
-        />
-      </div>
-    ))}
-
-    {/* Reject Reason */}
-    <div className="flex flex-col gap-3 pt-4 border-t">
-
-  {!showRejectField ? (
-    <div className="flex gap-2">
-      <button
-        onClick={handleRejectClick}
-        className="btn btn-destructive flex-1"
-      >
-        Reject
-      </button>
-
-      <button
-        onClick={handleSaveAndNext}
-        disabled={!isValidJson}
-        className="btn btn-accent flex-1"
-      >
-        Approve & Next
-      </button>
-    </div>
-  ) : (
-    <div className="space-y-2">
-      <TextField
-        fullWidth
-        size="small"
-        label="Reject Reason"
-        value={approve_cmd}
-        onChange={(e) => setApprove_cmd(e.target.value)}
-        autoFocus
-      />
-
-      <div className="flex gap-2">
-        <button
-          onClick={() => setShowRejectField(false)}
-          className="btn flex-1"
+          onClick={handleNext}
+          sx={{
+            border: "1.5px solid #e2e8f0",
+            borderRadius: "8px",
+            width: 30,
+            height: 30,
+            "&:hover": { background: "#f8fafc" },
+            "&:disabled": { opacity: 0.35, borderColor: "#f1f5f9" },
+          }}
         >
-          Cancel
-        </button>
+          <MdNavigateNext style={{ fontSize: 18 }} />
+        </IconButton>
+      </div>
 
-        <button
-          onClick={handleReject}
-          className="btn btn-destructive flex-1"
+      {/* ── Col 2: Title (truly centered because grid 1fr auto 1fr) ── */}
+      <div style={{ textAlign: "center", minWidth: 0 }}>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 700,
+            color: "#0f172a",
+            letterSpacing: "-0.2px",
+            whiteSpace: "nowrap",
+          }}
         >
-          Confirm Reject
-        </button>
+          Document Analysis
+        </div>
+        <div
+          style={{
+            fontSize: 11.5,
+            color: "#94a3b8",
+            fontFamily: "monospace",
+            marginTop: 1,
+          }}
+        >
+          #{tableState?.data[tableState.index]?.SerialID || tableState?.currentId}
+        </div>
+      </div>
+
+      {/* ── Col 3: empty — keeps grid symmetric so title stays centered ── */}
+      <div />
+    </div>
+
+    {/* ═══════════════════════════════════════════════════
+        MAIN CONTENT — Image viewer (left) + Findings panel (right)
+    ═══════════════════════════════════════════════════ */}
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "row",
+        gap: 0,
+        overflow: "hidden",
+        minHeight: 0,
+      }}
+    >
+      {/* ── Left: Image Viewer ── */}
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          overflow: "hidden",
+        
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {imageJson && (
+          <ImageComponent
+            jsonInput={jsonInput}
+            setJsonInput={setJsonInput}
+            setIsValidJson={setIsValidJson}
+            jsonPath="data.image"
+            imageJson={imageJson}
+          />
+        )}
+      </div>
+
+      {/* ── Vertical Divider ── */}
+      <div style={{ width: 1, background: "#e2e8f0", flexShrink: 0 }} />
+
+      {/* ── Right: Findings Panel ── */}
+      <div
+        style={{
+          width: 400,
+          flexShrink: 0,
+          display: "flex",
+          flexDirection: "column",
+          background: "#fff",
+          overflow: "hidden",
+        }}
+      >
+        {/* Panel header */}
+        <div
+          style={{
+            padding: "14px 18px 12px",
+            borderBottom: "1px solid #f1f5f9",
+            flexShrink: 0,
+          }}
+        >
+          <div style={{ fontSize: 13.5, fontWeight: 700, color: "#0f172a" }}>
+            Editable Findings
+          </div>
+          <div style={{ fontSize: 11.5, color: "#94a3b8", marginTop: 2 }}>
+            Review and edit extracted fields
+          </div>
+        </div>
+
+        {/* Scrollable findings list */}
+        <div
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "14px 18px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+          }}
+        >
+          {Object.entries(findings).map(([key, value]) => (
+            <div key={key} style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+              <label
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  color: "#94a3b8",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.6,
+                }}
+              >
+                {key.replace(/_/g, " ")}
+              </label>
+              <textarea
+                style={{
+                  width: "100%",
+                  padding: "10px 12px",
+                  borderRadius: 9,
+                  border: "1.5px solid #e2e8f0",
+                  background: "#f8fafc",
+                  fontSize: 13,
+                  color: "#334155",
+                  fontFamily: "inherit",
+                  resize: "vertical",
+                  outline: "none",
+                  transition: "border-color .15s",
+                  lineHeight: 1.5,
+                  boxSizing: "border-box",
+                }}
+                rows={3}
+                value={editableData[key] ?? value}
+                onChange={(e) =>
+                  setEditableData((prev) => ({ ...prev, [key]: e.target.value }))
+                }
+                onFocus={(e) => (e.target.style.borderColor = "#3b82f6")}
+                onBlur={(e) => (e.target.style.borderColor = "#e2e8f0")}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* ── Action Footer ── */}
+        <div
+          style={{
+            borderTop: "1.5px solid #f1f5f9",
+            padding: "14px 18px",
+            flexShrink: 0,
+            background: "#fff",
+          }}
+        >
+          {!showRejectField ? (
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {/* Reject */}
+              <Button
+                onClick={handleRejectClick}
+                color="error"
+                variant="outlined"
+                size="small"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  fontSize: 12.5,
+                  flex: 1,
+                }}
+              >
+                Reject
+              </Button>
+
+              {/* Approve */}
+              <Button
+                onClick={handleSave}
+                color="success"
+                variant="contained"
+                size="small"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  fontSize: 12.5,
+                  flex: 1,
+                }}
+              >
+                Approve
+              </Button>
+
+              {/* Approve & Next */}
+              <Button
+                onClick={handleSaveAndNext}
+                disabled={!isValidJson}
+                color="primary"
+                variant="contained"
+                size="small"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 600,
+                  borderRadius: "8px",
+                  fontSize: 12.5,
+                  flex: 2,
+                  minWidth: 120,
+                }}
+              >
+                Approve & Next →
+              </Button>
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <TextField
+                fullWidth
+                size="small"
+                label="Reject Reason"
+                value={approve_cmd}
+                onChange={(e) => setApprove_cmd(e.target.value)}
+                autoFocus
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "8px",
+                    fontSize: 13,
+                    "& fieldset": { borderColor: "#e2e8f0" },
+                  },
+                  "& label": { fontSize: 12.5 },
+                }}
+              />
+              <div style={{ display: "flex", gap: 8 }}>
+                <Button
+                  onClick={() => setShowRejectField(false)}
+                  color="inherit"
+                  variant="outlined"
+                  size="small"
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: 600,
+                    borderRadius: "8px",
+                    fontSize: 12.5,
+                    flex: 1,
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleReject}
+                  color="error"
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    textTransform: "none",
+                    fontWeight: 600,
+                    borderRadius: "8px",
+                    fontSize: 12.5,
+                    flex: 1,
+                  }}
+                >
+                  Confirm Reject
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  )}
-</div>
-
   </div>
-
-
-</div>
-
-
-      {/* THUMBNAILS */}
-      {/* <div className="glass-card p-2 flex gap-2 overflow-x-auto">
-        {viewerImages.map((img, index) => (
-
-          <button
-            key={index}
-            onClick={() => {
-              setActiveImage(index);
-              resetZoom();
-            }}
-            className={`min-w-[90px] h-[70px] rounded-md overflow-hidden border-2 transition
-              ${activeImage === index ? "border-accent" : "border-transparent"}
-            `}
-          >
-            <img src={img} className="w-full h-full object-cover" />
-          </button>
-        ))}
-      </div> */}
-    </div>
-  );
+);
 }

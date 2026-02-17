@@ -850,731 +850,1466 @@ const StatusBadge = ({ status }) => {
   };
 
 
-  return (
-    <div className=" relative overflow-y-auto">
-      {/* Loading Overlay */}
-      <LoadingOverlay isLoading={loading} />
+  // return (
+  //   <div className=" relative overflow-y-auto max-h-[100vh]">
+  //     {/* Loading Overlay */}
+  //     <LoadingOverlay isLoading={loading} />
 
-      {/* Animated Background Orbs */}
-      <motion.div
-        className="absolute left-0 top-0 w-[400px] h-[400px] rounded-full opacity-20 pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, hsl(175 80% 40% / 0.3), transparent)",
-        }}
-        animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
+  //     {/* Animated Background Orbs */}
+  //     <motion.div
+  //       className="absolute left-0 top-0 w-[400px] h-[400px] rounded-full opacity-20 pointer-events-none"
+  //       style={{
+  //         background: "radial-gradient(circle, hsl(175 80% 40% / 0.3), transparent)",
+  //       }}
+  //       animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
+  //       transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+  //     />
 
-      <motion.div
-        className="absolute right-0 top-20 w-[300px] h-[300px] rounded-full opacity-15 pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, hsl(215 90% 55% / 0.3), transparent)",
-        }}
-        animate={{ x: [0, -30, 0], y: [0, 40, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
+  //     <motion.div
+  //       className="absolute right-0 top-20 w-[300px] h-[300px] rounded-full opacity-15 pointer-events-none"
+  //       style={{
+  //         background: "radial-gradient(circle, hsl(215 90% 55% / 0.3), transparent)",
+  //       }}
+  //       animate={{ x: [0, -30, 0], y: [0, 40, 0] }}
+  //       transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+  //     />
 
-      <div className="relative z-10 p-4 md:p-8 lg:p-12 space-y-6">
-        {/* Welcome Header */}
-        {userName && userEmail && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6"
-          >
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
-              {t('welcome_user')}, {userName}
-            </h1>
-          </motion.div>
-        )}
+  //     <div className="relative z-10 p-4 md:p-8 lg:p-12 space-y-6">
+  //       {/* Welcome Header */}
+  //       {userName && userEmail && (
+  //         <motion.div
+  //           initial={{ opacity: 0, y: -20 }}
+  //           animate={{ opacity: 1, y: 0 }}
+  //           className="mb-6"
+  //         >
+  //           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">
+  //             {t('welcome_user')}, {userName}
+  //           </h1>
+  //         </motion.div>
+  //       )}
 
-        {/* DESKTOP: Collapsible Upload Section */}
-        {!isMobile && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 "
-          >
-            {/* Header Bar - Always Visible */}
-            <div
-              className="flex items-center justify-between px-6 py-4  cursor-pointer"
-              onClick={() => setIsUploadExpanded(!isUploadExpanded)}
-            >
-               <motion.div
-        className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg"
-      >
+  //       {/* DESKTOP: Collapsible Upload Section */}
+  //       {!isMobile && (
+  //         <motion.div
+  //           initial={{ opacity: 0, y: 20 }}
+  //           animate={{ opacity: 1, y: 0 }}
+  //           className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 "
+  //         >
+  //           {/* Header Bar - Always Visible */}
+  //           <div
+  //             className="flex items-center justify-between px-6 py-4  cursor-pointer"
+  //             onClick={() => setIsUploadExpanded(!isUploadExpanded)}
+  //           >
+  //              <motion.div
+  //       className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg"
+  //     >
+  //       <motion.div
+  //         className="absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+  //         animate={{ x: ["-120%", "120%"] }}
+  //         transition={{ repeat: Infinity, duration: 2.8, ease: "linear" }}
+  //       />
+  //     </motion.div>
+  //             <div className="flex items-center gap-3">
+  //               <FaUpload className="text- text-xl" />
+  //               <h2 className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent font-semibold text-lg">
+  //                 Upload Data
+  //               </h2>
+  //               {!isUploadExpanded && file && (
+  //                 <Chip
+  //                   label={file.name}
+  //                   size="small"
+  //                   onDelete={() => setFile(null)}
+  //                   className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent"
+  //                 />
+  //               )}
+  //             </div>
+  //             <motion.div
+  //               animate={{ rotate: isUploadExpanded ? 180 : 0 }}
+  //               transition={{ duration: 0.3 }}
+  //             >
+  //               <FaChevronDown className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text  text-xl" />
+  //             </motion.div>
+  //           </div>
+
+  //           {/* Expandable Upload Form */}
+  //           <AnimatePresence>
+  //             {isUploadExpanded && (
+  //               <motion.div
+  //                 initial={{ height: 0, opacity: 0 }}
+  //                 animate={{ height: "auto", opacity: 1 }}
+  //                 exit={{ height: 0, opacity: 0 }}
+  //                 transition={{ duration: 0.3 }}
+  //               >
+  //                 <form onSubmit={handleSubmit} className="p-6">
+  //                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  //                     {/* Data Type */}
+  //                     <div className="space-y-2">
+  //                       <label className="text-sm font-medium text-gray-700">
+  //                         Data Type
+  //                       </label>
+  //                       <Autocomplete
+  //                         id="data_type"
+  //                         options={dataTypes}
+  //                         value={data_type}
+  //                         size="small"
+  //                         onChange={(event, newValue) => {
+  //                           setDataType(newValue);
+  //                           if (newValue === "Other") {
+  //                             setShowCustomInput(true);
+  //                             setCustomDataType("");
+  //                           } else {
+  //                             setShowCustomInput(false);
+  //                             setCustomDataType("");
+  //                           }
+  //                         }}
+  //                         renderInput={(params) => (
+  //                           <TextField
+  //                             {...params}
+  //                             placeholder="Select Data Type"
+  //                             required
+  //                           />
+  //                         )}
+  //                       />
+  //                       {showCustomInput && (
+  //                         <TextField
+  //                           fullWidth
+  //                           size="small"
+  //                           value={customDataType}
+  //                           onChange={(e) => setCustomDataType(e.target.value)}
+  //                           placeholder={t('placeholder_custom_type')}
+  //                           required={showCustomInput}
+  //                         />
+  //                       )}
+  //                     </div>
+
+  //                     {/* File Type */}
+  //                     <div className="space-y-2">
+  //                       <label className="text-sm font-medium text-gray-700">
+  //                         File Type
+  //                       </label>
+  //                       <TextField
+  //                         fullWidth
+  //                         size="small"
+  //                         value={file_type}
+  //                         onChange={(e) => setFileType(e.target.value)}
+  //                         pattern="^(zip|pdf|png|jpg|txt|wav|mp3|doc|docx)$"
+  //                         placeholder="zip, pdf, png..."
+  //                         required
+  //                       />
+  //                     </div>
+
+  //                     {/* File Picker */}
+  //                     <div className="space-y-2">
+  //                       <label className="text-sm font-medium text-gray-700">
+  //                         Choose File
+  //                       </label>
+  //                       <div className="relative">
+  //                         <input
+  //                           type="file"
+  //                           ref={fileInputRef}
+  //                           onChange={(e) => setFile(e.target.files[0])}
+  //                           className="hidden"
+  //                           id="file-upload"
+  //                           required
+  //                         />
+  //                         <label
+  //                           htmlFor="file-upload"
+  //                           className="flex items-center justify-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-teal-500 cursor-pointer transition-colors bg-gray-50"
+  //                         >
+  //                           <FaUpload className="text-gray-500" />
+  //                           <span className="text-sm text-gray-600 truncate">
+  //                             {file ? file.name : "Browse..."}
+  //                           </span>
+  //                         </label>
+  //                       </div>
+  //                     </div>
+
+  //                     {/* Upload Button */}
+  //                     <div className="space-y-2">
+  //                       <label className="text-sm font-medium text-gray-700 invisible">
+  //                         Action
+  //                       </label>
+  //                       <Button
+  //                         type="submit"
+  //                         variant="contained"
+  //                         fullWidth
+  //                         disabled={isLoading}
+  //                         className="primary-btn text-white py-2"
+  //                       >
+  //                         {isLoading ? (
+  //                           <>
+  //                             <CircularProgress size={18} color="inherit" className="mr-2" />
+  //                             Uploading...
+  //                           </>
+  //                         ) : (
+  //                           <>
+  //                             <FaUpload className="mr-2" />
+  //                             Upload
+  //                           </>
+  //                         )}
+  //                       </Button>
+  //                     </div>
+  //                   </div>
+
+  //                   {/* Status Messages */}
+  //                   {errorMessage && (
+  //                     <motion.div
+  //                       initial={{ opacity: 0, y: -10 }}
+  //                       animate={{ opacity: 1, y: 0 }}
+  //                       className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm"
+  //                     >
+  //                       {errorMessage}
+  //                     </motion.div>
+  //                   )}
+  //                   {successMessage && (
+  //                     <motion.div
+  //                       initial={{ opacity: 0, y: -10 }}
+  //                       animate={{ opacity: 1, y: 0 }}
+  //                       className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm"
+  //                     >
+  //                       {successMessage}
+  //                     </motion.div>
+  //                   )}
+  //                 </form>
+  //               </motion.div>
+  //             )}
+  //           </AnimatePresence>
+  //         </motion.div>
+  //       )}
+
+  //       {/* MOBILE: Floating Action Button */}
+  //       {isMobile && (
+  //         <>
+  //           <Fab
+  //             color="primary"
+  //             aria-label="upload"
+  //             onClick={() => setIsMobileUploadOpen(true)}
+  //             sx={{
+  //               position: 'fixed',
+  //               bottom: 16,
+  //               right: 16,
+  //               zIndex: 1000,
+  //               background: 'primary-btn',
+  //             }}
+  //           >
+  //             <FaUpload />
+  //           </Fab>
+
+  //           {/* Mobile Upload Dialog */}
+  //           <Dialog
+  //             fullScreen
+  //             open={isMobileUploadOpen}
+  //             onClose={() => setIsMobileUploadOpen(false)}
+  //           >
+  //             <div className=" p-4 flex items-center justify-between">
+  //               <h2 className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent font-bold text-xl">
+  //                 Upload Data
+  //               </h2>
+  //               <IconButton onClick={() => setIsMobileUploadOpen(false)}>
+  //                 <FaTimes className="text-white" />
+  //               </IconButton>
+  //             </div>
+              
+  //             <div className="p-6 space-y-4 bg-gray-50">
+  //               <form onSubmit={(e) => {
+  //                 handleSubmit(e);
+  //                 setIsMobileUploadOpen(false);
+  //               }} className="space-y-4">
+  //                 {/* Data Type */}
+  //                 <div className="space-y-2">
+  //                   <label className="text-sm font-semibold text-gray-700">
+  //                     Data Type *
+  //                   </label>
+  //                   <Autocomplete
+  //                     options={dataTypes}
+  //                     value={data_type}
+  //                     onChange={(event, newValue) => {
+  //                       setDataType(newValue);
+  //                       if (newValue === "Other") {
+  //                         setShowCustomInput(true);
+  //                         setCustomDataType("");
+  //                       } else {
+  //                         setShowCustomInput(false);
+  //                         setCustomDataType("");
+  //                       }
+  //                     }}
+  //                     renderInput={(params) => (
+  //                       <TextField
+  //                         {...params}
+  //                         placeholder="Select or Type"
+  //                         required
+  //                       />
+  //                     )}
+  //                   />
+  //                   {showCustomInput && (
+  //                     <TextField
+  //                       fullWidth
+  //                       value={customDataType}
+  //                       onChange={(e) => setCustomDataType(e.target.value)}
+  //                       placeholder="Custom Data Type"
+  //                       required={showCustomInput}
+  //                     />
+  //                   )}
+  //                 </div>
+
+  //                 {/* File Type */}
+  //                 <div className="space-y-2">
+  //                   <label className="text-sm font-semibold text-gray-700">
+  //                     File Type *
+  //                   </label>
+  //                   <TextField
+  //                     fullWidth
+  //                     value={file_type}
+  //                     onChange={(e) => setFileType(e.target.value)}
+  //                     pattern="^(zip|pdf|png|jpg|txt|wav|mp3|doc|docx)$"
+  //                     placeholder="zip, pdf, png, jpg..."
+  //                     required
+  //                   />
+  //                 </div>
+
+  //                 {/* File Upload */}
+  //                 <div className="space-y-2">
+  //                   <label className="text-sm font-semibold text-gray-700">
+  //                     Choose File *
+  //                   </label>
+  //                   <input
+  //                     type="file"
+  //                     ref={fileInputRef}
+  //                     onChange={(e) => setFile(e.target.files[0])}
+  //                     className="hidden"
+  //                     id="mobile-file-upload"
+  //                     required
+  //                   />
+  //                   <label
+  //                     htmlFor="mobile-file-upload"
+  //                     className="flex items-center justify-center gap-3 p-6 border-2 border-dashed border-gray-300 rounded-xl hover:border-teal-500 cursor-pointer transition-all bg-white"
+  //                   >
+  //                     <FaUpload className="text-2xl text-gray-400" />
+  //                     <div className="text-center">
+  //                       <p className="text-sm font-medium text-gray-700">
+  //                         {file ? file.name : "Tap to select file"}
+  //                       </p>
+  //                       <p className="text-xs text-gray-500 mt-1">
+  //                         {file ? `${(file.size / 1024 / 1024).toFixed(2)} MB` : "Max 100MB"}
+  //                       </p>
+  //                     </div>
+  //                   </label>
+  //                 </div>
+
+  //                 {/* Upload Button */}
+  //                 <Button
+  //                   type="submit"
+  //                   variant="contained"
+  //                   fullWidth
+  //                   size="large"
+  //                   disabled={isLoading}
+  //                   className="auth-btn text-white py-4 text-lg"
+  //                 >
+  //                   {isLoading ? (
+  //                     <>
+  //                       <CircularProgress size={24} color="inherit" className="mr-2" />
+  //                       Uploading...
+  //                     </>
+  //                   ) : (
+  //                     <>
+  //                       <FaUpload className="mr-2" />
+  //                       Upload File
+  //                     </>
+  //                   )}
+  //                 </Button>
+
+  //                 {/* Messages */}
+  //                 {errorMessage && (
+  //                   <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+  //                     {errorMessage}
+  //                   </div>
+  //                 )}
+  //                 {successMessage && (
+  //                   <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+  //                     {successMessage}
+  //                   </div>
+  //                 )}
+  //               </form>
+  //             </div>
+  //           </Dialog>
+  //         </>
+  //       )}
+
+  //       {/* Dashboard Section */}
+  //       <motion.div
+  //         initial={{ opacity: 0, y: 20 }}
+  //         animate={{ opacity: 1, y: 0 }}
+  //         transition={{ delay: 0.2 }}
+  //         className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 "
+  //       >
+  //         {/* Dashboard Header */}
+  //         <div className="p-4 md:p-6 border-b border-gray-200">
+  //           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+  //             <h2 className="text-xl md:text-2xl font-bold text-gray-800">
+  //               {t('dashboard_title')}
+  //             </h2>
+
+  //             {/* Action Buttons - Responsive */}
+  //             <div className="flex flex-wrap items-center gap-2 md:gap-3">
+  //               {/* Download Selected */}
+  //               <Button
+  //                 onClick={handleDownload}
+  //                 disabled={selectedRows.length === 0 || downloadLoading}
+  //                 variant="contained"
+  //                 size={isMobile ? "small" : "medium"}
+  //                 startIcon={downloadLoading ? <CircularProgress size={16} /> : <FaDownload />}
+  //                  className={`btn ${
+  //   selectedRows.length === 0 || downloadLoading
+  //     ? "btn-disabled"
+  //     : "btn-primary"
+  // }`}
+  //               >
+  //                 ({selectedRows.length})
+  //               </Button>
+
+  //               {/* Download Report */}
+  //               <Button
+  //                 onClick={() => setOpenDatePicker(true)}
+  //                 disabled={downloading}
+  //                 variant="outlined"
+  //                 size={isMobile ? "small" : "medium"}
+  //                  className={`btn ${downloading ? "btn-disabled" : "btn-secondary"}`}
+  //                 startIcon={downloading ? <CircularProgress size={16} /> : <FaFileDownload />}
+  //               >
+  //               Report
+  //               </Button>
+
+  //               {/* Delete */}
+  //               <Button
+  //                 onClick={() => setDeleteDialogOpen(true)}
+  //                 disabled={selectedRows.length === 0}
+  //                 variant="contained"
+  //                 size={isMobile ? "small" : "medium"}
+  //                 color="error"
+  //                 startIcon={<FaTrash />}
+  //               >
+  //              ({selectedRows.length})
+  //               </Button>
+
+  //               {/* Date Picker */}
+  //               <div className="hidden md:block" ref={datePickerRef}>
+  //                 <TextField
+  //                   size="small"
+  //                   value={`${moment(searchState.start_date).format("D MMM YY")} ~ ${moment(searchState.end_date).format("D MMM YY")}`}
+  //                   onClick={() => setIsOpen(!isOpen)}
+  //                   placeholder={t('placeholder_select_date')}
+  //                   style={{ cursor: "pointer", minWidth: "200px" }}
+  //                   InputProps={{ readOnly: true }}
+  //                 />
+  //                 {isOpen && (
+  //                   <div className="absolute right-0 z-50 mt-2 shadow-lg bg-white">
+  //                     <DateRangePicker
+  //                       onChange={(item) => {
+  //                         setState([item.selection]);
+  //                         const start_date = item.selection.startDate;
+  //                         const end_date = item.selection.endDate;
+  //                         setSearchState((prev) => ({
+  //                           ...prev,
+  //                           start_date,
+  //                           end_date,
+  //                           page_number: 1,
+  //                         }));
+  //                         setCurrentPage(1);
+  //                       }}
+  //                       showSelectionPreview={true}
+  //                       moveRangeOnFirstSelection={false}
+  //                       months={2}
+  //                       ranges={state}
+  //                       direction="horizontal"
+  //                       locale={currentLocale}
+  //                     />
+  //                     <div className="flex justify-end gap-2 p-3 border-t bg-white">
+  //                       <Button onClick={() => setIsOpen(false)} size="small">
+  //                         {t('btn_cancel')}
+  //                       </Button>
+  //                       <Button
+  //                         onClick={() => {
+  //                           setIsOpen(false);
+  //                           fetchData(1);
+  //                         }}
+  //                         size="small"
+  //                         variant="contained"
+  //                       >
+  //                         {t('btn_apply')}
+  //                       </Button>
+  //                     </div>
+  //                   </div>
+  //                 )}
+  //               </div>
+
+  //               {/* Refresh */}
+  //               <IconButton
+  //                 onClick={handleRefresh}
+  //                 className={refreshing ? "animate-spin" : ""}
+  //                 color="primary"
+  //               >
+  //                 <FaHistory />
+  //               </IconButton>
+  //             </div>
+  //           </div>
+
+  //           {/* Mobile Date Filter */}
+  //           {isMobile && (
+  //             <div className="mt-3">
+  //               <TextField
+  //                 fullWidth
+  //                 size="small"
+  //                 value={`${moment(searchState.start_date).format("D MMM")} ~ ${moment(searchState.end_date).format("D MMM")}`}
+  //                 onClick={() => setIsOpen(!isOpen)}
+  //                 placeholder="Select Date Range"
+  //                 InputProps={{ readOnly: true }}
+  //               />
+  //             </div>
+  //           )}
+  //         </div>
+
+  //         {/* Table Container - Improved Scrolling */}
+  //         <div className="overflow-x-auto overflow-y-auto max-h-[100vh]">
+  //           {error ? (
+  //             <div className="text-center text-red-500 py-8">{error}</div>
+  //           ) : (
+  //             <div className="min-h-[300px] max-h-[500px] overflow-y-auto">
+  //               <table className="w-full border-collapse">
+  //                 <thead className="sticky top-0 z-10 primary-btn text-white">
+  //                   <tr>
+  //                     {columns.map((headCell) => (
+  //                       <th
+  //                         key={headCell.id}
+  //                         className="border-b border-white/20 p-3 text-left text-xs md:text-sm font-semibold whitespace-nowrap"
+  //                       >
+  //                         {headCell.id === "select" ? (
+  //                           <Checkbox
+  //                             indeterminate={selectedRows.length > 0 && selectedRows.length < tableData.length}
+  //                             checked={tableData.length > 0 && selectedRows.length === tableData.length}
+  //                             onChange={(e) => {
+  //                               if (e.target.checked) {
+  //                                 setSelectedRows(tableData.map(item => item.UploadIDs));
+  //                               } else {
+  //                                 setSelectedRows([]);
+  //                               }
+  //                             }}
+  //                             sx={{ color: 'white', '&.Mui-checked': { color: 'white' } }}
+  //                           />
+  //                         ) : headCell.sortable ? (
+  //                           <TableSortLabel
+  //                             active={orderBy === headCell.id}
+  //                             direction={orderBy === headCell.id ? order : "asc"}
+  //                             onClick={() => handleRequestSort(headCell.id)}
+  //                             sx={{
+  //                               "&.MuiTableSortLabel-root": { color: "white" },
+  //                               "&.MuiTableSortLabel-root:hover": { color: "white" },
+  //                               "&.Mui-active": { color: "white" },
+  //                               "& .MuiTableSortLabel-icon": { color: "white !important" },
+  //                             }}
+  //                           >
+  //                             {headCell.label}
+  //                           </TableSortLabel>
+  //                         ) : (
+  //                           headCell.label
+  //                         )}
+  //                       </th>
+  //                     ))}
+  //                   </tr>
+  //                 </thead>
+  //                 <tbody className="bg-white divide-y divide-gray-200">
+  //                   {stableSort(tableData, getComparator(order, orderBy)).map(
+  //                     (item, index) => (
+  //                       <tr
+  //                         key={index}
+  //                         className={`hover:bg-blue-50 transition-colors ${
+  //                           selectedRows.includes(item.UploadIDs) ? "bg-blue-50" : ""
+  //                         } ${
+  //                           item.CompleteNotification === 1 ? "bg-green-50" : ""
+  //                         }`}
+  //                       >
+  //                         <td className="border-b p-3 text-sm">
+  //                           <div className="flex items-center gap-2">
+  //                             <Checkbox
+  //                               checked={selectedRows.includes(item.UploadIDs)}
+  //                               onChange={() => handleRowSelect(item.UploadIDs)}
+  //                               size="small"
+  //                             />
+  //                             <span className="font-mono text-xs">
+  //                               {item.UploadIDs || t('status_not_available')}
+  //                             </span>
+  //                           </div>
+  //                         </td>
+  //                         <td className="border-b p-3 text-sm">
+  //                           <StatusBadge status={item.PostProcessCompletion} />
+  //                         </td>
+  //                         <td className="border-b p-3 text-sm">
+  //                           <StatusBadge status={item.IECompletion} />
+  //                         </td>
+  //                         <td className="border-b p-3 text-sm">
+  //                           <StatusBadge status={item.TranscribeCompletion} />
+  //                         </td>
+  //                         <td className="border-b p-3 text-sm">
+  //                           <StatusBadge status={item.PreProcessCompletion} />
+  //                         </td>
+  //                         <td className="border-b p-3 text-sm whitespace-nowrap">
+  //                           {item.InstanceTimeStamp || t('status_not_available')}
+  //                         </td>
+  //                         <td className="border-b p-3 text-sm">
+  //                           <Chip
+  //                             label={item.DataType || t('status_not_available')}
+  //                             size="small"
+  //                             color="primary"
+  //                             variant="outlined"
+  //                           />
+  //                         </td>
+  //                       </tr>
+  //                     )
+  //                   )}
+  //                 </tbody>
+  //               </table>
+
+  //               {/* Pagination */}
+  //               <TablePagination
+  //                 rowsPerPageOptions={availablePageSizes}
+  //                 component="div"
+  //                 count={totalItems || 0}
+  //                 rowsPerPage={searchState.page_size || 10}
+  //                 page={Math.max(0, (searchState.page_number || 1) - 1)}
+  //                 onPageChange={handleChangePage}
+  //                 onRowsPerPageChange={handleChangeRowsPerPage}
+  //                 labelDisplayedRows={({ from, to, count }) =>
+  //                   `${from}-${to} ${t('pagination_of')} ${count}`
+  //                 }
+  //               />
+  //             </div>
+  //           )}
+  //         </div>
+  //       </motion.div>
+  //     </div>
+
+  //     {/* Dialogs - Keep existing dialogs */}
+  //     <Dialog open={deleteDialogOpen} onClose={handleDeleteCancel}>
+  //       <DialogTitle>{t('dialog_delete_title')}</DialogTitle>
+  //       <DialogContent>
+  //         {t('dialog_delete_confirm')} {selectedRows.length}{" "}
+  //         {selectedRows.length !== 1 ? t('dialog_delete_items') : t('dialog_delete_selected')}?{" "}
+  //         {t('dialog_delete_warning')}
+  //       </DialogContent>
+  //       <DialogActions>
+  //         <Button onClick={handleDeleteCancel}>{t('btn_cancel')}</Button>
+  //         <Button onClick={handleDeleteConfirm} color="error">
+  //           {t('btn_delete')}
+  //         </Button>
+  //       </DialogActions>
+  //     </Dialog>
+
+  //     {/* Report Download Dialog */}
+  //     <Dialog
+  //       open={openDatePicker}
+  //       onClose={() => setOpenDatePicker(false)}
+  //       maxWidth="md"
+  //       fullWidth
+  //     >
+  //       <DialogTitle>{t('dialog_report_download_title')}</DialogTitle>
+  //       <DialogContent>
+  //         <div className="mt-4">
+  //           {selectedRows.length === 0 ? (
+  //             <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
+  //               <p className="text-sm text-yellow-800 font-medium">
+  //                 ⚠️ {t('alert_no_upload_ids')}
+  //               </p>
+  //               <p className="text-sm text-yellow-700 mt-1">
+  //                 {t('alert_report_all')}
+  //               </p>
+  //             </div>
+  //           ) : (
+  //             <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
+  //               <p className="text-sm text-blue-800 font-medium">
+  //                 ✓ {selectedRows.length}{" "}
+  //                 {selectedRows.length !== 1
+  //                   ? t('alert_upload_ids_selected_plural')
+  //                   : t('alert_upload_ids_selected')}
+  //               </p>
+  //               <p className="text-sm text-blue-700 mt-1">
+  //                 {t('alert_report_selected')}
+  //               </p>
+  //             </div>
+  //           )}
+
+  //           <DateRangePicker
+  //             onChange={(item) => setReportDateRange([item.selection])}
+  //             showSelectionPreview={true}
+  //             moveRangeOnFirstSelection={false}
+  //             months={isMobile ? 1 : 2}
+  //             ranges={reportDateRange}
+  //             direction="horizontal"
+  //             locale={currentLocale}
+  //           />
+
+  //           <div className="mt-4 p-3 bg-gray-50 rounded">
+  //             <p className="text-sm text-gray-700">
+  //               <strong>{t('label_selected_range')}</strong>{" "}
+  //               {moment(reportDateRange[0].startDate).format("D MMM YYYY")} ~{" "}
+  //               {moment(reportDateRange[0].endDate).format("D MMM YYYY")}
+  //             </p>
+  //           </div>
+  //         </div>
+  //       </DialogContent>
+  //       <DialogActions>
+  //         <Button onClick={() => setOpenDatePicker(false)}>
+  //           {t('btn_cancel')}
+  //         </Button>
+  //         <Button
+  //           onClick={handleDownloadReport}
+  //           variant="contained"
+  //           disabled={downloading}
+  //         >
+  //           {downloading ? (
+  //             <>
+  //               <CircularProgress size={20} sx={{ mr: 1 }} color="inherit" />
+  //               {t('btn_downloading')}
+  //             </>
+  //           ) : (
+  //             t('btn_download_report')
+  //           )}
+  //         </Button>
+  //       </DialogActions>
+  //     </Dialog>
+  //   </div>
+  // );
+
+  // UploadDashboard/index.jsx — Improved layout
+// Better header zone, upload section, table area, responsive support
+
+return (
+  <div
+    style={{
+      fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
+      minHeight: "100vh",
+      background: "#f0f4f8",
+      display: "flex",
+      flexDirection: "column",
+      position: "relative",
+      overflowX: "hidden",
+    }}
+  >
+    <LoadingOverlay isLoading={loading} />
+
+    {/* ── Subtle background orbs ── */}
+    <motion.div
+      style={{
+        position: "absolute", left: 0, top: 0,
+        width: 400, height: 400, borderRadius: "50%",
+        background: "radial-gradient(circle, hsl(175 80% 40% / 0.12), transparent)",
+        pointerEvents: "none", zIndex: 0,
+      }}
+      animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
+      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+    />
+    <motion.div
+      style={{
+        position: "absolute", right: 0, top: 80,
+        width: 300, height: 300, borderRadius: "50%",
+        background: "radial-gradient(circle, hsl(215 90% 55% / 0.10), transparent)",
+        pointerEvents: "none", zIndex: 0,
+      }}
+      animate={{ x: [0, -30, 0], y: [0, 40, 0] }}
+      transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+    />
+
+    <div style={{ position: "relative", zIndex: 1, padding: "24px 24px 32px", display: "flex", flexDirection: "column", gap: 20 }}>
+
+      {/* ═══════════════════════════════════════════════════
+          WELCOME HEADER
+      ═══════════════════════════════════════════════════ */}
+      {userName && userEmail && (
+        <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}>
+          <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: "-0.5px", lineHeight: 1.2 }}>
+            <span style={{ background: "linear-gradient(135deg, #0d9488, #2563eb)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              {t("welcome_user")}, {userName}
+            </span>
+          </div>
+          <div style={{ fontSize: 13, color: "#94a3b8", marginTop: 4 }}>{userEmail}</div>
+        </motion.div>
+      )}
+
+      {/* ═══════════════════════════════════════════════════
+          UPLOAD SECTION — Desktop collapsible
+      ═══════════════════════════════════════════════════ */}
+      {!isMobile && (
         <motion.div
-          className="absolute top-0 bottom-0 w-1/3 bg-gradient-to-r from-transparent via-primary/20 to-transparent"
-          animate={{ x: ["-120%", "120%"] }}
-          transition={{ repeat: Infinity, duration: 2.8, ease: "linear" }}
-        />
-      </motion.div>
-              <div className="flex items-center gap-3">
-                <FaUpload className="text- text-xl" />
-                <h2 className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent font-semibold text-lg">
-                  Upload Data
-                </h2>
-                {!isUploadExpanded && file && (
-                  <Chip
-                    label={file.name}
-                    size="small"
-                    onDelete={() => setFile(null)}
-                    className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent"
-                  />
-                )}
-              </div>
-              <motion.div
-                animate={{ rotate: isUploadExpanded ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            background: "#fff",
+            borderRadius: 14,
+            border: "1px solid #e2e8f0",
+            boxShadow: "0 2px 8px rgba(0,0,0,.04)",
+            overflow: "hidden",
+          }}
+        >
+          {/* Collapsible header */}
+          <div
+            onClick={() => setIsUploadExpanded(!isUploadExpanded)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "14px 20px",
+              cursor: "pointer",
+              borderBottom: isUploadExpanded ? "1px solid #f1f5f9" : "none",
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            {/* Shimmer on header */}
+            <motion.div
+              style={{
+                position: "absolute", inset: 0, pointerEvents: "none",
+                background: "linear-gradient(90deg, transparent, rgba(13,148,136,.06), transparent)",
+                width: "40%",
+              }}
+              animate={{ x: ["-120%", "260%"] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+            />
+
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div
+                style={{
+                  width: 32, height: 32, borderRadius: 8,
+                  background: "linear-gradient(135deg, #0d9488, #2563eb)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}
               >
-                <FaChevronDown className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text  text-xl" />
-              </motion.div>
+                <FaUpload style={{ color: "#fff", fontSize: 13 }} />
+              </div>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#0f172a" }}>Upload Data</div>
+                <div style={{ fontSize: 11.5, color: "#94a3b8" }}>Add new files to the pipeline</div>
+              </div>
+              {!isUploadExpanded && file && (
+                <Chip
+                  label={file.name}
+                  size="small"
+                  onDelete={() => setFile(null)}
+                  sx={{ fontSize: 11, ml: 1 }}
+                />
+              )}
             </div>
 
-            {/* Expandable Upload Form */}
-            <AnimatePresence>
-              {isUploadExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <form onSubmit={handleSubmit} className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {/* Data Type */}
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
-                          Data Type
-                        </label>
-                        <Autocomplete
-                          id="data_type"
-                          options={dataTypes}
-                          value={data_type}
-                          size="small"
-                          onChange={(event, newValue) => {
-                            setDataType(newValue);
-                            if (newValue === "Other") {
-                              setShowCustomInput(true);
-                              setCustomDataType("");
-                            } else {
-                              setShowCustomInput(false);
-                              setCustomDataType("");
-                            }
-                          }}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Select Data Type"
-                              required
-                            />
-                          )}
-                        />
-                        {showCustomInput && (
-                          <TextField
-                            fullWidth
-                            size="small"
-                            value={customDataType}
-                            onChange={(e) => setCustomDataType(e.target.value)}
-                            placeholder={t('placeholder_custom_type')}
-                            required={showCustomInput}
+            <motion.div animate={{ rotate: isUploadExpanded ? 180 : 0 }} transition={{ duration: 0.25 }}>
+              <FaChevronDown style={{ color: "#94a3b8", fontSize: 13 }} />
+            </motion.div>
+          </div>
+
+          {/* Expandable form */}
+          <AnimatePresence>
+            {isUploadExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                style={{ overflow: "hidden" }}
+              >
+                <form onSubmit={handleSubmit} style={{ padding: "18px 20px" }}>
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                      gap: 14,
+                      alignItems: "end",
+                    }}
+                  >
+                    {/* Data Type */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                      <label style={{ fontSize: 11.5, fontWeight: 600, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5 }}>
+                        Data Type
+                      </label>
+                      <Autocomplete
+                        id="data_type"
+                        options={dataTypes}
+                        value={data_type}
+                        size="small"
+                        onChange={(event, newValue) => {
+                          setDataType(newValue);
+                          if (newValue === "Other") { setShowCustomInput(true); setCustomDataType(""); }
+                          else { setShowCustomInput(false); setCustomDataType(""); }
+                        }}
+                        renderInput={(params) => (
+                          <TextField {...params} placeholder="Select Data Type" required
+                            sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px", fontSize: 13, "& fieldset": { borderColor: "#e2e8f0" } } }}
                           />
                         )}
-                      </div>
-
-                      {/* File Type */}
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
-                          File Type
-                        </label>
+                      />
+                      {showCustomInput && (
                         <TextField
-                          fullWidth
-                          size="small"
-                          value={file_type}
-                          onChange={(e) => setFileType(e.target.value)}
-                          pattern="^(zip|pdf|png|jpg|txt|wav|mp3|doc|docx)$"
-                          placeholder="zip, pdf, png..."
-                          required
+                          fullWidth size="small"
+                          value={customDataType}
+                          onChange={(e) => setCustomDataType(e.target.value)}
+                          placeholder={t("placeholder_custom_type")}
+                          required={showCustomInput}
+                          sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px", fontSize: 13 } }}
                         />
-                      </div>
-
-                      {/* File Picker */}
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
-                          Choose File
-                        </label>
-                        <div className="relative">
-                          <input
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={(e) => setFile(e.target.files[0])}
-                            className="hidden"
-                            id="file-upload"
-                            required
-                          />
-                          <label
-                            htmlFor="file-upload"
-                            className="flex items-center justify-center gap-2 px-4 py-2 border-2 border-dashed border-gray-300 rounded-lg hover:border-teal-500 cursor-pointer transition-colors bg-gray-50"
-                          >
-                            <FaUpload className="text-gray-500" />
-                            <span className="text-sm text-gray-600 truncate">
-                              {file ? file.name : "Browse..."}
-                            </span>
-                          </label>
-                        </div>
-                      </div>
-
-                      {/* Upload Button */}
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700 invisible">
-                          Action
-                        </label>
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          fullWidth
-                          disabled={isLoading}
-                          className="primary-btn text-white py-2"
-                        >
-                          {isLoading ? (
-                            <>
-                              <CircularProgress size={18} color="inherit" className="mr-2" />
-                              Uploading...
-                            </>
-                          ) : (
-                            <>
-                              <FaUpload className="mr-2" />
-                              Upload
-                            </>
-                          )}
-                        </Button>
-                      </div>
+                      )}
                     </div>
 
-                    {/* Status Messages */}
+                    {/* File Type */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                      <label style={{ fontSize: 11.5, fontWeight: 600, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5 }}>
+                        File Type
+                      </label>
+                      <TextField
+                        fullWidth size="small"
+                        value={file_type}
+                        onChange={(e) => setFileType(e.target.value)}
+                        placeholder="zip, pdf, png..."
+                        required
+                        sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px", fontSize: 13, "& fieldset": { borderColor: "#e2e8f0" } } }}
+                      />
+                    </div>
+
+                    {/* File Picker */}
+                    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                      <label style={{ fontSize: 11.5, fontWeight: 600, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5 }}>
+                        Choose File
+                      </label>
+                      <input type="file" ref={fileInputRef} onChange={(e) => setFile(e.target.files[0])} className="hidden" id="file-upload" required />
+                      <label
+                        htmlFor="file-upload"
+                        style={{
+                          display: "flex", alignItems: "center", gap: 8,
+                          padding: "7px 12px",
+                          border: "1.5px dashed #cbd5e1",
+                          borderRadius: 8,
+                          cursor: "pointer",
+                          background: "#f8fafc",
+                          fontSize: 12.5,
+                          color: file ? "#0f172a" : "#94a3b8",
+                          transition: "border-color .15s",
+                          overflow: "hidden",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#0d9488")}
+                        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#cbd5e1")}
+                      >
+                        <FaUpload style={{ color: "#94a3b8", flexShrink: 0 }} />
+                        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {file ? file.name : "Browse..."}
+                        </span>
+                      </label>
+                    </div>
+
+                    {/* Upload button */}
+                    <div>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        disabled={isLoading}
+                        sx={{
+                          background: "linear-gradient(135deg, #0d9488, #2563eb)",
+                          textTransform: "none",
+                          fontWeight: 700,
+                          borderRadius: "8px",
+                          fontSize: 13,
+                          height: 38,
+                          boxShadow: "none",
+                          "&:hover": { boxShadow: "0 4px 14px rgba(13,148,136,.35)" },
+                        }}
+                      >
+                        {isLoading ? (
+                          <><CircularProgress size={16} color="inherit" style={{ marginRight: 8 }} />Uploading...</>
+                        ) : (
+                          <><FaUpload style={{ marginRight: 8 }} />Upload</>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Status messages */}
+                  <AnimatePresence>
                     {errorMessage && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm"
+                      <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                        style={{ marginTop: 12, padding: "10px 14px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, fontSize: 12.5, color: "#dc2626" }}
                       >
                         {errorMessage}
                       </motion.div>
                     )}
                     {successMessage && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm"
+                      <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                        style={{ marginTop: 12, padding: "10px 14px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 8, fontSize: 12.5, color: "#16a34a" }}
                       >
                         {successMessage}
                       </motion.div>
                     )}
-                  </form>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        )}
-
-        {/* MOBILE: Floating Action Button */}
-        {isMobile && (
-          <>
-            <Fab
-              color="primary"
-              aria-label="upload"
-              onClick={() => setIsMobileUploadOpen(true)}
-              sx={{
-                position: 'fixed',
-                bottom: 16,
-                right: 16,
-                zIndex: 1000,
-                background: 'primary-btn',
-              }}
-            >
-              <FaUpload />
-            </Fab>
-
-            {/* Mobile Upload Dialog */}
-            <Dialog
-              fullScreen
-              open={isMobileUploadOpen}
-              onClose={() => setIsMobileUploadOpen(false)}
-            >
-              <div className=" p-4 flex items-center justify-between">
-                <h2 className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent font-bold text-xl">
-                  Upload Data
-                </h2>
-                <IconButton onClick={() => setIsMobileUploadOpen(false)}>
-                  <FaTimes className="text-white" />
-                </IconButton>
-              </div>
-              
-              <div className="p-6 space-y-4 bg-gray-50">
-                <form onSubmit={(e) => {
-                  handleSubmit(e);
-                  setIsMobileUploadOpen(false);
-                }} className="space-y-4">
-                  {/* Data Type */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">
-                      Data Type *
-                    </label>
-                    <Autocomplete
-                      options={dataTypes}
-                      value={data_type}
-                      onChange={(event, newValue) => {
-                        setDataType(newValue);
-                        if (newValue === "Other") {
-                          setShowCustomInput(true);
-                          setCustomDataType("");
-                        } else {
-                          setShowCustomInput(false);
-                          setCustomDataType("");
-                        }
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          placeholder="Select or Type"
-                          required
-                        />
-                      )}
-                    />
-                    {showCustomInput && (
-                      <TextField
-                        fullWidth
-                        value={customDataType}
-                        onChange={(e) => setCustomDataType(e.target.value)}
-                        placeholder="Custom Data Type"
-                        required={showCustomInput}
-                      />
-                    )}
-                  </div>
-
-                  {/* File Type */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">
-                      File Type *
-                    </label>
-                    <TextField
-                      fullWidth
-                      value={file_type}
-                      onChange={(e) => setFileType(e.target.value)}
-                      pattern="^(zip|pdf|png|jpg|txt|wav|mp3|doc|docx)$"
-                      placeholder="zip, pdf, png, jpg..."
-                      required
-                    />
-                  </div>
-
-                  {/* File Upload */}
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">
-                      Choose File *
-                    </label>
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={(e) => setFile(e.target.files[0])}
-                      className="hidden"
-                      id="mobile-file-upload"
-                      required
-                    />
-                    <label
-                      htmlFor="mobile-file-upload"
-                      className="flex items-center justify-center gap-3 p-6 border-2 border-dashed border-gray-300 rounded-xl hover:border-teal-500 cursor-pointer transition-all bg-white"
-                    >
-                      <FaUpload className="text-2xl text-gray-400" />
-                      <div className="text-center">
-                        <p className="text-sm font-medium text-gray-700">
-                          {file ? file.name : "Tap to select file"}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {file ? `${(file.size / 1024 / 1024).toFixed(2)} MB` : "Max 100MB"}
-                        </p>
-                      </div>
-                    </label>
-                  </div>
-
-                  {/* Upload Button */}
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    size="large"
-                    disabled={isLoading}
-                    className="auth-btn text-white py-4 text-lg"
-                  >
-                    {isLoading ? (
-                      <>
-                        <CircularProgress size={24} color="inherit" className="mr-2" />
-                        Uploading...
-                      </>
-                    ) : (
-                      <>
-                        <FaUpload className="mr-2" />
-                        Upload File
-                      </>
-                    )}
-                  </Button>
-
-                  {/* Messages */}
-                  {errorMessage && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
-                      {errorMessage}
-                    </div>
-                  )}
-                  {successMessage && (
-                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
-                      {successMessage}
-                    </div>
-                  )}
+                  </AnimatePresence>
                 </form>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      )}
+
+      {/* Mobile FAB */}
+      {isMobile && (
+        <>
+          <Fab
+            aria-label="upload"
+            onClick={() => setIsMobileUploadOpen(true)}
+            sx={{
+              position: "fixed", bottom: 20, right: 20, zIndex: 1000,
+              background: "linear-gradient(135deg, #0d9488, #2563eb)",
+              color: "#fff",
+              "&:hover": { background: "linear-gradient(135deg, #0f766e, #1d4ed8)" },
+            }}
+          >
+            <FaUpload />
+          </Fab>
+
+          <Dialog fullScreen open={isMobileUploadOpen} onClose={() => setIsMobileUploadOpen(false)}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid #f1f5f9" }}>
+              <div style={{ fontSize: 16, fontWeight: 700, background: "linear-gradient(135deg, #0d9488, #2563eb)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                Upload Data
               </div>
-            </Dialog>
-          </>
-        )}
-
-        {/* Dashboard Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 "
-        >
-          {/* Dashboard Header */}
-          <div className="p-4 md:p-6 border-b border-gray-200">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-800">
-                {t('dashboard_title')}
-              </h2>
-
-              {/* Action Buttons - Responsive */}
-              <div className="flex flex-wrap items-center gap-2 md:gap-3">
-                {/* Download Selected */}
-                <Button
-                  onClick={handleDownload}
-                  disabled={selectedRows.length === 0 || downloadLoading}
-                  variant="contained"
-                  size={isMobile ? "small" : "medium"}
-                  startIcon={downloadLoading ? <CircularProgress size={16} /> : <FaDownload />}
-                   className={`btn ${
-    selectedRows.length === 0 || downloadLoading
-      ? "btn-disabled"
-      : "btn-primary"
-  }`}
-                >
-                  ({selectedRows.length})
-                </Button>
-
-                {/* Download Report */}
-                <Button
-                  onClick={() => setOpenDatePicker(true)}
-                  disabled={downloading}
-                  variant="outlined"
-                  size={isMobile ? "small" : "medium"}
-                   className={`btn ${downloading ? "btn-disabled" : "btn-secondary"}`}
-                  startIcon={downloading ? <CircularProgress size={16} /> : <FaFileDownload />}
-                >
-                Report
-                </Button>
-
-                {/* Delete */}
-                <Button
-                  onClick={() => setDeleteDialogOpen(true)}
-                  disabled={selectedRows.length === 0}
-                  variant="contained"
-                  size={isMobile ? "small" : "medium"}
-                  color="error"
-                  startIcon={<FaTrash />}
-                >
-               ({selectedRows.length})
-                </Button>
-
-                {/* Date Picker */}
-                <div className="hidden md:block" ref={datePickerRef}>
-                  <TextField
-                    size="small"
-                    value={`${moment(searchState.start_date).format("D MMM YY")} ~ ${moment(searchState.end_date).format("D MMM YY")}`}
-                    onClick={() => setIsOpen(!isOpen)}
-                    placeholder={t('placeholder_select_date')}
-                    style={{ cursor: "pointer", minWidth: "200px" }}
-                    InputProps={{ readOnly: true }}
+              <IconButton onClick={() => setIsMobileUploadOpen(false)} size="small">
+                <FaTimes style={{ fontSize: 16, color: "#64748b" }} />
+              </IconButton>
+            </div>
+            <div style={{ padding: "20px", background: "#f8fafc", flex: 1, overflowY: "auto" }}>
+              <form onSubmit={(e) => { handleSubmit(e); setIsMobileUploadOpen(false); }} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                {/* Data Type */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5 }}>Data Type *</label>
+                  <Autocomplete
+                    options={dataTypes} value={data_type}
+                    onChange={(event, newValue) => {
+                      setDataType(newValue);
+                      setShowCustomInput(newValue === "Other");
+                      setCustomDataType("");
+                    }}
+                    renderInput={(params) => <TextField {...params} placeholder="Select or Type" required />}
                   />
-                  {isOpen && (
-                    <div className="absolute right-0 z-50 mt-2 shadow-lg bg-white">
-                      <DateRangePicker
-                        onChange={(item) => {
-                          setState([item.selection]);
-                          const start_date = item.selection.startDate;
-                          const end_date = item.selection.endDate;
-                          setSearchState((prev) => ({
-                            ...prev,
-                            start_date,
-                            end_date,
-                            page_number: 1,
-                          }));
-                          setCurrentPage(1);
-                        }}
-                        showSelectionPreview={true}
-                        moveRangeOnFirstSelection={false}
-                        months={2}
-                        ranges={state}
-                        direction="horizontal"
-                        locale={currentLocale}
-                      />
-                      <div className="flex justify-end gap-2 p-3 border-t bg-white">
-                        <Button onClick={() => setIsOpen(false)} size="small">
-                          {t('btn_cancel')}
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            setIsOpen(false);
-                            fetchData(1);
-                          }}
-                          size="small"
-                          variant="contained"
-                        >
-                          {t('btn_apply')}
-                        </Button>
-                      </div>
-                    </div>
+                  {showCustomInput && (
+                    <TextField fullWidth value={customDataType} onChange={(e) => setCustomDataType(e.target.value)} placeholder="Custom Data Type" required={showCustomInput} />
                   )}
                 </div>
-
-                {/* Refresh */}
-                <IconButton
-                  onClick={handleRefresh}
-                  className={refreshing ? "animate-spin" : ""}
-                  color="primary"
+                {/* File Type */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5 }}>File Type *</label>
+                  <TextField fullWidth value={file_type} onChange={(e) => setFileType(e.target.value)} placeholder="zip, pdf, png, jpg..." required />
+                </div>
+                {/* File Upload */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5 }}>Choose File *</label>
+                  <input type="file" ref={fileInputRef} onChange={(e) => setFile(e.target.files[0])} className="hidden" id="mobile-file-upload" required />
+                  <label htmlFor="mobile-file-upload"
+                    style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "24px 16px", border: "2px dashed #cbd5e1", borderRadius: 12, cursor: "pointer", background: "#fff", textAlign: "center" }}
+                  >
+                    <FaUpload style={{ fontSize: 22, color: "#94a3b8" }} />
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: "#334155" }}>{file ? file.name : "Tap to select file"}</div>
+                      <div style={{ fontSize: 11.5, color: "#94a3b8", marginTop: 2 }}>
+                        {file ? `${(file.size / 1024 / 1024).toFixed(2)} MB` : "Max 100MB"}
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <Button type="submit" variant="contained" fullWidth size="large" disabled={isLoading}
+                  sx={{ background: "linear-gradient(135deg, #0d9488, #2563eb)", textTransform: "none", fontWeight: 700, borderRadius: "10px", fontSize: 14 }}
                 >
-                  <FaHistory />
-                </IconButton>
-              </div>
+                  {isLoading ? <><CircularProgress size={20} color="inherit" style={{ marginRight: 8 }} />Uploading...</> : <><FaUpload style={{ marginRight: 8 }} />Upload File</>}
+                </Button>
+                {errorMessage && <div style={{ padding: "12px 14px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, fontSize: 13, color: "#dc2626" }}>{errorMessage}</div>}
+                {successMessage && <div style={{ padding: "12px 14px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 8, fontSize: 13, color: "#16a34a" }}>{successMessage}</div>}
+              </form>
             </div>
+          </Dialog>
+        </>
+      )}
 
-            {/* Mobile Date Filter */}
-            {isMobile && (
-              <div className="mt-3">
-                <TextField
-                  fullWidth
-                  size="small"
-                  value={`${moment(searchState.start_date).format("D MMM")} ~ ${moment(searchState.end_date).format("D MMM")}`}
-                  onClick={() => setIsOpen(!isOpen)}
-                  placeholder="Select Date Range"
-                  InputProps={{ readOnly: true }}
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Table Container - Improved Scrolling */}
-          <div className="overflow-x-auto">
-            {error ? (
-              <div className="text-center text-red-500 py-8">{error}</div>
-            ) : (
-              <div className="min-h-[300px] max-h-[500px] overflow-y-auto">
-                <table className="w-full border-collapse">
-                  <thead className="sticky top-0 z-10 primary-btn text-white">
-                    <tr>
-                      {columns.map((headCell) => (
-                        <th
-                          key={headCell.id}
-                          className="border-b border-white/20 p-3 text-left text-xs md:text-sm font-semibold whitespace-nowrap"
-                        >
-                          {headCell.id === "select" ? (
-                            <Checkbox
-                              indeterminate={selectedRows.length > 0 && selectedRows.length < tableData.length}
-                              checked={tableData.length > 0 && selectedRows.length === tableData.length}
-                              onChange={(e) => {
-                                if (e.target.checked) {
-                                  setSelectedRows(tableData.map(item => item.UploadIDs));
-                                } else {
-                                  setSelectedRows([]);
-                                }
-                              }}
-                              sx={{ color: 'white', '&.Mui-checked': { color: 'white' } }}
-                            />
-                          ) : headCell.sortable ? (
-                            <TableSortLabel
-                              active={orderBy === headCell.id}
-                              direction={orderBy === headCell.id ? order : "asc"}
-                              onClick={() => handleRequestSort(headCell.id)}
-                              sx={{
-                                "&.MuiTableSortLabel-root": { color: "white" },
-                                "&.MuiTableSortLabel-root:hover": { color: "white" },
-                                "&.Mui-active": { color: "white" },
-                                "& .MuiTableSortLabel-icon": { color: "white !important" },
-                              }}
-                            >
-                              {headCell.label}
-                            </TableSortLabel>
-                          ) : (
-                            headCell.label
-                          )}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {stableSort(tableData, getComparator(order, orderBy)).map(
-                      (item, index) => (
-                        <tr
-                          key={index}
-                          className={`hover:bg-blue-50 transition-colors ${
-                            selectedRows.includes(item.UploadIDs) ? "bg-blue-50" : ""
-                          } ${
-                            item.CompleteNotification === 1 ? "bg-green-50" : ""
-                          }`}
-                        >
-                          <td className="border-b p-3 text-sm">
-                            <div className="flex items-center gap-2">
-                              <Checkbox
-                                checked={selectedRows.includes(item.UploadIDs)}
-                                onChange={() => handleRowSelect(item.UploadIDs)}
-                                size="small"
-                              />
-                              <span className="font-mono text-xs">
-                                {item.UploadIDs || t('status_not_available')}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="border-b p-3 text-sm">
-                            <StatusBadge status={item.PostProcessCompletion} />
-                          </td>
-                          <td className="border-b p-3 text-sm">
-                            <StatusBadge status={item.IECompletion} />
-                          </td>
-                          <td className="border-b p-3 text-sm">
-                            <StatusBadge status={item.TranscribeCompletion} />
-                          </td>
-                          <td className="border-b p-3 text-sm">
-                            <StatusBadge status={item.PreProcessCompletion} />
-                          </td>
-                          <td className="border-b p-3 text-sm whitespace-nowrap">
-                            {item.InstanceTimeStamp || t('status_not_available')}
-                          </td>
-                          <td className="border-b p-3 text-sm">
-                            <Chip
-                              label={item.DataType || t('status_not_available')}
-                              size="small"
-                              color="primary"
-                              variant="outlined"
-                            />
-                          </td>
-                        </tr>
-                      )
-                    )}
-                  </tbody>
-                </table>
-
-                {/* Pagination */}
-                <TablePagination
-                  rowsPerPageOptions={availablePageSizes}
-                  component="div"
-                  count={totalItems || 0}
-                  rowsPerPage={searchState.page_size || 10}
-                  page={Math.max(0, (searchState.page_number || 1) - 1)}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  labelDisplayedRows={({ from, to, count }) =>
-                    `${from}-${to} ${t('pagination_of')} ${count}`
-                  }
-                />
-              </div>
-            )}
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Dialogs - Keep existing dialogs */}
-      <Dialog open={deleteDialogOpen} onClose={handleDeleteCancel}>
-        <DialogTitle>{t('dialog_delete_title')}</DialogTitle>
-        <DialogContent>
-          {t('dialog_delete_confirm')} {selectedRows.length}{" "}
-          {selectedRows.length !== 1 ? t('dialog_delete_items') : t('dialog_delete_selected')}?{" "}
-          {t('dialog_delete_warning')}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteCancel}>{t('btn_cancel')}</Button>
-          <Button onClick={handleDeleteConfirm} color="error">
-            {t('btn_delete')}
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Report Download Dialog */}
-      <Dialog
-        open={openDatePicker}
-        onClose={() => setOpenDatePicker(false)}
-        maxWidth="md"
-        fullWidth
+      {/* ═══════════════════════════════════════════════════
+          DASHBOARD TABLE SECTION
+      ═══════════════════════════════════════════════════ */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        style={{
+          background: "#fff",
+          borderRadius: 14,
+          border: "1px solid #e2e8f0",
+          boxShadow: "0 2px 8px rgba(0,0,0,.04)",
+          overflow: "hidden",
+        }}
       >
-        <DialogTitle>{t('dialog_report_download_title')}</DialogTitle>
-        <DialogContent>
-          <div className="mt-4">
-            {selectedRows.length === 0 ? (
-              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
-                <p className="text-sm text-yellow-800 font-medium">
-                  ⚠️ {t('alert_no_upload_ids')}
-                </p>
-                <p className="text-sm text-yellow-700 mt-1">
-                  {t('alert_report_all')}
-                </p>
-              </div>
-            ) : (
-              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
-                <p className="text-sm text-blue-800 font-medium">
-                  ✓ {selectedRows.length}{" "}
-                  {selectedRows.length !== 1
-                    ? t('alert_upload_ids_selected_plural')
-                    : t('alert_upload_ids_selected')}
-                </p>
-                <p className="text-sm text-blue-700 mt-1">
-                  {t('alert_report_selected')}
-                </p>
-              </div>
-            )}
-
-            <DateRangePicker
-              onChange={(item) => setReportDateRange([item.selection])}
-              showSelectionPreview={true}
-              moveRangeOnFirstSelection={false}
-              months={isMobile ? 1 : 2}
-              ranges={reportDateRange}
-              direction="horizontal"
-              locale={currentLocale}
-            />
-
-            <div className="mt-4 p-3 bg-gray-50 rounded">
-              <p className="text-sm text-gray-700">
-                <strong>{t('label_selected_range')}</strong>{" "}
-                {moment(reportDateRange[0].startDate).format("D MMM YYYY")} ~{" "}
-                {moment(reportDateRange[0].endDate).format("D MMM YYYY")}
-              </p>
+        {/* ── Table Header ── */}
+        <div
+          style={{
+            padding: "14px 20px",
+            borderBottom: "1px solid #f1f5f9",
+            display: "grid",
+            gridTemplateColumns: "1fr auto",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
+          {/* Left: Title */}
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a" }}>
+              {t("dashboard_title")}
             </div>
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDatePicker(false)}>
-            {t('btn_cancel')}
-          </Button>
-          <Button
-            onClick={handleDownloadReport}
-            variant="contained"
-            disabled={downloading}
-          >
-            {downloading ? (
-              <>
-                <CircularProgress size={20} sx={{ mr: 1 }} color="inherit" />
-                {t('btn_downloading')}
-              </>
-            ) : (
-              t('btn_download_report')
+            {selectedRows.length > 0 && (
+              <div style={{ fontSize: 11.5, color: "#3b82f6", marginTop: 2 }}>
+                {selectedRows.length} row{selectedRows.length !== 1 ? "s" : ""} selected
+              </div>
             )}
-          </Button>
-        </DialogActions>
-      </Dialog>
+          </div>
+
+          {/* Right: Action buttons + date + refresh */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+
+            {/* Download selected */}
+            <Button
+              onClick={handleDownload}
+              disabled={selectedRows.length === 0 || downloadLoading}
+              variant={selectedRows.length > 0 ? "contained" : "outlined"}
+              size="small"
+              startIcon={downloadLoading ? <CircularProgress size={13} color="inherit" /> : <FaDownload />}
+              sx={{
+                textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5,
+                ...(selectedRows.length > 0 && {
+                  background: "linear-gradient(135deg, #0d9488, #2563eb)",
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "0 4px 12px rgba(13,148,136,.3)" },
+                }),
+              }}
+            >
+              Download {selectedRows.length > 0 && `(${selectedRows.length})`}
+            </Button>
+
+            {/* Report */}
+            <Button
+              onClick={() => setOpenDatePicker(true)}
+              disabled={downloading}
+              variant="outlined"
+              size="small"
+              startIcon={downloading ? <CircularProgress size={13} color="inherit" /> : <FaFileDownload />}
+              sx={{
+                textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5,
+                borderColor: "#e2e8f0", color: "#475569",
+                "&:hover": { borderColor: "#94a3b8", background: "#f8fafc" },
+              }}
+            >
+              Report
+            </Button>
+
+            {/* Delete */}
+            <Button
+              onClick={() => setDeleteDialogOpen(true)}
+              disabled={selectedRows.length === 0}
+              variant="outlined"
+              size="small"
+              color="error"
+              startIcon={<FaTrash />}
+              sx={{
+                textTransform: "none", fontWeight: 600, borderRadius: "8px", fontSize: 12.5,
+                ...(selectedRows.length > 0 && {
+                  background: "#fef2f2",
+                  borderColor: "#fca5a5",
+                  "&:hover": { background: "#fee2e2" },
+                }),
+              }}
+            >
+              Delete {selectedRows.length > 0 && `(${selectedRows.length})`}
+            </Button>
+
+            <div style={{ width: 1, height: 20, background: "#e2e8f0" }} />
+
+            {/* Date range picker — desktop */}
+            <div className="hidden md:block" ref={datePickerRef} style={{ position: "relative" }}>
+              <TextField
+                size="small"
+                value={`${moment(searchState.start_date).format("D MMM YY")} ~ ${moment(searchState.end_date).format("D MMM YY")}`}
+                onClick={() => setIsOpen(!isOpen)}
+                InputProps={{ readOnly: true }}
+                sx={{
+                  cursor: "pointer", minWidth: 180,
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "8px", fontSize: 12.5, cursor: "pointer",
+                    "& fieldset": { borderColor: "#e2e8f0" },
+                  },
+                  "& input": { cursor: "pointer" },
+                }}
+              />
+              {isOpen && (
+                <div style={{ position: "absolute", right: 0, zIndex: 999, marginTop: 6, background: "#fff", borderRadius: 12, boxShadow: "0 8px 32px rgba(0,0,0,.14)", border: "1px solid #e2e8f0" }}>
+                  <DateRangePicker
+                    onChange={(item) => {
+                      setState([item.selection]);
+                      const start_date = item.selection.startDate;
+                      const end_date = item.selection.endDate;
+                      setSearchState((prev) => ({ ...prev, start_date, end_date, page_number: 1 }));
+                      setCurrentPage(1);
+                    }}
+                    showSelectionPreview={true}
+                    moveRangeOnFirstSelection={false}
+                    months={2}
+                    ranges={state}
+                    direction="horizontal"
+                    locale={currentLocale}
+                  />
+                  <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, padding: "10px 14px", borderTop: "1px solid #f1f5f9" }}>
+                    <Button onClick={() => setIsOpen(false)} size="small" variant="outlined" sx={{ textTransform: "none", borderRadius: "7px" }}>
+                      {t("btn_cancel")}
+                    </Button>
+                    <Button onClick={() => { setIsOpen(false); fetchData(1); }} size="small" variant="contained"
+                      sx={{ textTransform: "none", borderRadius: "7px", background: "linear-gradient(135deg, #0d9488, #2563eb)", boxShadow: "none" }}
+                    >
+                      {t("btn_apply")}
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Refresh */}
+            <IconButton
+              onClick={handleRefresh}
+              size="small"
+              sx={{
+                border: "1.5px solid #e2e8f0", borderRadius: "8px", width: 34, height: 34,
+                color: "#64748b",
+                "&:hover": { background: "#f8fafc", borderColor: "#cbd5e1" },
+              }}
+            >
+              <FaHistory style={{ fontSize: 14, transition: "transform .4s" }} className={refreshing ? "animate-spin" : ""} />
+            </IconButton>
+          </div>
+
+          {/* Mobile date picker */}
+          {isMobile && (
+            <div style={{ gridColumn: "1 / -1" }}>
+              <TextField
+                fullWidth size="small"
+                value={`${moment(searchState.start_date).format("D MMM")} ~ ${moment(searchState.end_date).format("D MMM")}`}
+                onClick={() => setIsOpen(!isOpen)}
+                InputProps={{ readOnly: true }}
+                sx={{ "& .MuiOutlinedInput-root": { borderRadius: "8px", fontSize: 13 } }}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* ── Table ── */}
+        <div style={{ overflowX: "auto" }}>
+          {error ? (
+            <div style={{ textAlign: "center", color: "#ef4444", padding: "32px 20px", fontSize: 13 }}>{error}</div>
+          ) : (
+            <div style={{ maxHeight: 480, overflowY: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr style={{ background: "linear-gradient(135deg, #0d9488, #2563eb)", position: "sticky", top: 0, zIndex: 2 }}>
+                    {columns.map((headCell) => (
+                      <th
+                        key={headCell.id}
+                        style={{
+                          padding: "10px 14px",
+                          textAlign: "left",
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: "rgba(255,255,255,.9)",
+                          textTransform: "uppercase",
+                          letterSpacing: 0.6,
+                          whiteSpace: "nowrap",
+                          borderBottom: "1px solid rgba(255,255,255,.15)",
+                        }}
+                      >
+                        {headCell.id === "select" ? (
+                          <Checkbox
+                            indeterminate={selectedRows.length > 0 && selectedRows.length < tableData.length}
+                            checked={tableData.length > 0 && selectedRows.length === tableData.length}
+                            onChange={(e) => {
+                              if (e.target.checked) setSelectedRows(tableData.map((item) => item.UploadIDs));
+                              else setSelectedRows([]);
+                            }}
+                            size="small"
+                            sx={{ color: "rgba(255,255,255,.8)", "&.Mui-checked": { color: "#fff" }, "&.MuiCheckbox-indeterminate": { color: "#fff" }, p: 0 }}
+                          />
+                        ) : headCell.sortable ? (
+                          <TableSortLabel
+                            active={orderBy === headCell.id}
+                            direction={orderBy === headCell.id ? order : "asc"}
+                            onClick={() => handleRequestSort(headCell.id)}
+                            sx={{
+                              "&.MuiTableSortLabel-root": { color: "rgba(255,255,255,.9)" },
+                              "&.MuiTableSortLabel-root:hover": { color: "#fff" },
+                              "&.Mui-active": { color: "#fff" },
+                              "& .MuiTableSortLabel-icon": { color: "rgba(255,255,255,.7) !important" },
+                            }}
+                          >
+                            {headCell.label}
+                          </TableSortLabel>
+                        ) : (
+                          headCell.label
+                        )}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {stableSort(tableData, getComparator(order, orderBy)).map((item, index) => (
+                    <tr
+                      key={index}
+                      style={{
+                        background: selectedRows.includes(item.UploadIDs)
+                          ? "#eff6ff"
+                          : item.CompleteNotification === 1
+                          ? "#f0fdf4"
+                          : index % 2 === 0 ? "#fff" : "#fafafa",
+                        transition: "background .12s",
+                      }}
+                      onMouseEnter={(e) => { if (!selectedRows.includes(item.UploadIDs)) e.currentTarget.style.background = "#f8fafc"; }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = selectedRows.includes(item.UploadIDs)
+                          ? "#eff6ff" : item.CompleteNotification === 1 ? "#f0fdf4"
+                          : index % 2 === 0 ? "#fff" : "#fafafa";
+                      }}
+                    >
+                      <td style={{ padding: "10px 14px", borderBottom: "1px solid #f1f5f9", fontSize: 12.5, verticalAlign: "middle" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          <Checkbox checked={selectedRows.includes(item.UploadIDs)} onChange={() => handleRowSelect(item.UploadIDs)} size="small" sx={{ p: 0 }} />
+                          <span style={{ fontFamily: "monospace", fontSize: 12, color: "#64748b", background: "#f1f5f9", padding: "2px 7px", borderRadius: 5 }}>
+                            {item.UploadIDs || t("status_not_available")}
+                          </span>
+                        </div>
+                      </td>
+                      <td style={{ padding: "10px 14px", borderBottom: "1px solid #f1f5f9", fontSize: 12.5, verticalAlign: "middle" }}>
+                        <StatusBadge status={item.PostProcessCompletion} />
+                      </td>
+                      <td style={{ padding: "10px 14px", borderBottom: "1px solid #f1f5f9", fontSize: 12.5, verticalAlign: "middle" }}>
+                        <StatusBadge status={item.IECompletion} />
+                      </td>
+                      <td style={{ padding: "10px 14px", borderBottom: "1px solid #f1f5f9", fontSize: 12.5, verticalAlign: "middle" }}>
+                        <StatusBadge status={item.TranscribeCompletion} />
+                      </td>
+                      <td style={{ padding: "10px 14px", borderBottom: "1px solid #f1f5f9", fontSize: 12.5, verticalAlign: "middle" }}>
+                        <StatusBadge status={item.PreProcessCompletion} />
+                      </td>
+                      <td style={{ padding: "10px 14px", borderBottom: "1px solid #f1f5f9", fontSize: 12.5, whiteSpace: "nowrap", color: "#64748b", fontFamily: "monospace", verticalAlign: "middle" }}>
+                        {item.InstanceTimeStamp || t("status_not_available")}
+                      </td>
+                      <td style={{ padding: "10px 14px", borderBottom: "1px solid #f1f5f9", fontSize: 12.5, verticalAlign: "middle" }}>
+                        <Chip
+                          label={item.DataType || t("status_not_available")}
+                          size="small"
+                          sx={{
+                            fontSize: 11, fontWeight: 600,
+                            background: "#f0f9ff", color: "#0369a1",
+                            border: "1px solid #bae6fd",
+                            height: 22,
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <TablePagination
+                rowsPerPageOptions={availablePageSizes}
+                component="div"
+                count={totalItems || 0}
+                rowsPerPage={searchState.page_size || 10}
+                page={Math.max(0, (searchState.page_number || 1) - 1)}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                labelDisplayedRows={({ from, to, count }) => `${from}–${to} ${t("pagination_of")} ${count}`}
+                sx={{
+                  borderTop: "1px solid #f1f5f9",
+                  "& .MuiTablePagination-toolbar": { minHeight: 46, px: 2 },
+                  "& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows": { fontSize: 12.5, color: "#64748b" },
+                  "& .MuiTablePagination-actions button": { border: "1.5px solid #e2e8f0", borderRadius: "7px", margin: "0 2px", "&:hover": { background: "#f8fafc" } },
+                }}
+              />
+            </div>
+          )}
+        </div>
+      </motion.div>
     </div>
-  );
+
+    {/* ═══════════════════════════════════════════════════
+        DIALOGS — logic unchanged
+    ═══════════════════════════════════════════════════ */}
+
+    {/* Delete confirm */}
+    <Dialog open={deleteDialogOpen} onClose={handleDeleteCancel}
+      PaperProps={{ sx: { borderRadius: "14px", minWidth: 360 } }}
+    >
+      <DialogTitle sx={{ fontSize: 15, fontWeight: 700, pb: 1 }}>{t("dialog_delete_title")}</DialogTitle>
+      <DialogContent sx={{ fontSize: 13.5, color: "#475569" }}>
+        {t("dialog_delete_confirm")} {selectedRows.length}{" "}
+        {selectedRows.length !== 1 ? t("dialog_delete_items") : t("dialog_delete_selected")}?{" "}
+        {t("dialog_delete_warning")}
+      </DialogContent>
+      <DialogActions sx={{ p: "12px 20px", gap: 1 }}>
+        <Button onClick={handleDeleteCancel} variant="outlined" size="small" sx={{ textTransform: "none", borderRadius: "8px" }}>
+          {t("btn_cancel")}
+        </Button>
+        <Button onClick={handleDeleteConfirm} color="error" variant="contained" size="small" sx={{ textTransform: "none", borderRadius: "8px" }}>
+          {t("btn_delete")}
+        </Button>
+      </DialogActions>
+    </Dialog>
+
+    {/* Report download dialog */}
+    <Dialog open={openDatePicker} onClose={() => setOpenDatePicker(false)} maxWidth="md" fullWidth
+      PaperProps={{ sx: { borderRadius: "14px" } }}
+    >
+      <DialogTitle sx={{ fontSize: 15, fontWeight: 700, pb: 1 }}>{t("dialog_report_download_title")}</DialogTitle>
+      <DialogContent>
+        <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 12 }}>
+          {selectedRows.length === 0 ? (
+            <div style={{ padding: "10px 14px", background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 8, fontSize: 12.5, color: "#92400e" }}>
+              ⚠️ {t("alert_no_upload_ids")} — {t("alert_report_all")}
+            </div>
+          ) : (
+            <div style={{ padding: "10px 14px", background: "#eff6ff", border: "1px solid #bfdbfe", borderRadius: 8, fontSize: 12.5, color: "#1d4ed8" }}>
+              ✓ {selectedRows.length} {selectedRows.length !== 1 ? t("alert_upload_ids_selected_plural") : t("alert_upload_ids_selected")} — {t("alert_report_selected")}
+            </div>
+          )}
+
+          <DateRangePicker
+            onChange={(item) => setReportDateRange([item.selection])}
+            showSelectionPreview={true}
+            moveRangeOnFirstSelection={false}
+            months={isMobile ? 1 : 2}
+            ranges={reportDateRange}
+            direction="horizontal"
+            locale={currentLocale}
+          />
+
+          <div style={{ padding: "10px 14px", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, fontSize: 12.5, color: "#475569" }}>
+            <strong>{t("label_selected_range")}</strong>{" "}
+            {moment(reportDateRange[0].startDate).format("D MMM YYYY")} ~{" "}
+            {moment(reportDateRange[0].endDate).format("D MMM YYYY")}
+          </div>
+        </div>
+      </DialogContent>
+      <DialogActions sx={{ p: "12px 20px", gap: 1 }}>
+        <Button onClick={() => setOpenDatePicker(false)} variant="outlined" size="small" sx={{ textTransform: "none", borderRadius: "8px" }}>
+          {t("btn_cancel")}
+        </Button>
+        <Button
+          onClick={handleDownloadReport}
+          variant="contained"
+          size="small"
+          disabled={downloading}
+          sx={{ textTransform: "none", borderRadius: "8px", background: "linear-gradient(135deg, #0d9488, #2563eb)", boxShadow: "none" }}
+        >
+          {downloading ? <><CircularProgress size={14} color="inherit" style={{ marginRight: 8 }} />{t("btn_downloading")}</> : t("btn_download_report")}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </div>
+);
 }
