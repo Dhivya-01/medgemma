@@ -45,7 +45,7 @@ useEffect(() => {
     // Only act when fullscreen is active
     if (!isFullscreen) return;
 
-    if (e.key === "Tab") {
+    if (e.key === "esc") {
       e.preventDefault(); // prevent focus jumping
       resetViewer();
     }

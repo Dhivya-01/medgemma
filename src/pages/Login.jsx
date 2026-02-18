@@ -860,7 +860,7 @@ console.log("dfgfgf",selectedProject.user_ids);
     return (
       <>
         <div className="space-y-3 mb-6 w-full max-w-md">
-          <button onClick={onGoogleLogin} className="auth-btn w-full">
+          <button onClick={onGoogleLogin} className="auth-btn w-full text-md">
             Continue with Google
           </button>
           <button onClick={onMicrosoftLogin} className="auth-btn w-full">
@@ -893,7 +893,7 @@ console.log("dfgfgf",selectedProject.user_ids);
       </button>
 
       <div className="w-full max-w-sm flex flex-col items-center text-center">
-        <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
+        <h2 className="lg:text-2xl md:text-xl sm:text-md font-bold mb-2 text-gradient">Welcome Back</h2>
         <p className="text-muted-foreground mb-8 max-w-xs">
           Access your AI workspace securely.
         </p>

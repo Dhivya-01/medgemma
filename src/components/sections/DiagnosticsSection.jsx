@@ -53,7 +53,7 @@ const DiagnosticsSection = () => {
             <div className="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-8 md:px-12 py-24 sm:py-28 text-center">
         <motion.h1
                     className="font-bold tracking-tight leading-[0.95] mb-4 sm:mb-6 mt-4"
-                    style={{ fontSize: "clamp(2.5rem, 4vw, 6rem)" }}
+                    style={{ fontSize: "clamp(2.5rem, 3vw, 6rem)" }}
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}

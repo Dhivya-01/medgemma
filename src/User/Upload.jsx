@@ -2026,7 +2026,11 @@ return (
             <div style={{ width: 1, height: 20, background: "#e2e8f0" }} />
 
             {/* Date range picker — desktop */}
-            <div className="hidden md:block" ref={datePickerRef} style={{ position: "relative" }}>
+           <div
+  ref={datePickerRef}
+
+>
+  
               <TextField
                 size="small"
                 value={`${moment(searchState.start_date).format("D MMM YY")} ~ ${moment(searchState.end_date).format("D MMM YY")}`}
@@ -2042,7 +2046,7 @@ return (
                 }}
               />
               {isOpen && (
-                <div style={{ position: "absolute", right: 0, zIndex: 999, marginTop: 6, background: "#fff", borderRadius: 12, boxShadow: "0 8px 32px rgba(0,0,0,.14)", border: "1px solid #e2e8f0" }}>
+                 <div className="absolute right-0 z-50 mt-2 shadow-lg bg-white">
                   <DateRangePicker
                     onChange={(item) => {
                       setState([item.selection]);

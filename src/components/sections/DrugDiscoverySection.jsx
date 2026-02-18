@@ -234,42 +234,42 @@ const DrugDiscoverySection = () => {
   <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
   
         {/* ── Background image ─────────────────────────────────── */}
-        <div className="absolute inset-0">
-          <img
-            src={heroBg}
-            alt=""
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/90 to-background" />
-        </div>
-  
+         <div className="absolute inset-0">
+               <img
+                 src={heroBg}
+                 alt=""
+                 className="w-full h-full object-cover opacity-20"
+               />
+               <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/90 to-background" />
+             </div>
+       
 
-      <motion.div
-        className="absolute rounded-full opacity-20 pointer-events-none"
-        style={{
-          width: "clamp(180px, 35vw, 500px)",
-          height: "clamp(180px, 35vw, 500px)",
-          top: "5%",
-          left: "-5%",
-          background: "radial-gradient(circle, hsl(175 80% 40% / 0.3), transparent)",
-        }}
-        animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      {/* ── Floating orb — top-right ──────────────────────────── */}
-      <motion.div
-        className="absolute rounded-full opacity-15 pointer-events-none"
-        style={{
-          width: "clamp(120px, 22vw, 300px)",
-          height: "clamp(120px, 22vw, 300px)",
-          top: "8%",
-          right: "4%",
-          background: "radial-gradient(circle, hsl(215 90% 55% / 0.3), transparent)",
-        }}
-        animate={{ x: [0, -30, 0], y: [0, 40, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <motion.div
+              className="absolute rounded-full opacity-20 pointer-events-none"
+              style={{
+                width: "clamp(180px, 35vw, 500px)",
+                height: "clamp(180px, 35vw, 500px)",
+                top: "5%",
+                left: "-5%",
+                background: "radial-gradient(circle, hsl(175 80% 40% / 0.3), transparent)",
+              }}
+              animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+      
+            {/* ── Floating orb — top-right ──────────────────────────── */}
+            <motion.div
+              className="absolute rounded-full opacity-15 pointer-events-none"
+              style={{
+                width: "clamp(120px, 22vw, 300px)",
+                height: "clamp(120px, 22vw, 300px)",
+                top: "8%",
+                right: "4%",
+                background: "radial-gradient(circle, hsl(215 90% 55% / 0.3), transparent)",
+              }}
+              animate={{ x: [0, -30, 0], y: [0, 40, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            />
 
       {/* ── Content ───────────────────────────────────────────────
           max-w keeps it readable on ultrawide monitors.
@@ -277,39 +277,25 @@ const DrugDiscoverySection = () => {
           py gives breathing room so nothing clips the header / dots.
           text-center on all sizes — adjust to text-left if needed.
       ───────────────────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-8 md:px-6 py-12 sm:py-28 text-center">
-
-        
-    <motion.h1
-          className="font-bold tracking-tight leading-[0.95] mb-4 sm:mb-6 mt-4"
-          style={{ fontSize: "clamp(2.5rem, 4vw, 6rem)" }}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        >
-            Global Intelligence.{" "}
-            <span
-              className="gradient-text"
-            >
-              Zero Privacy Compromise.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            className="text-muted-foreground mx-auto"
-            style={{
-              fontSize: "clamp(0.66rem, 1vw, 0.88rem)",
-              maxWidth: "min(500px, 92%)",
-              lineHeight: 1.55,
-              marginTop: "clamp(4px, 0.6vh, 8px)",
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35 }}
-          >
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-5 sm:px-8 md:px-12 py-24 sm:py-28 text-center">
+        <motion.h1
+                    className="font-bold tracking-tight leading-[0.95] mb-4 sm:mb-6 mt-4"
+                    style={{ fontSize: "clamp(2.5rem, 3vw, 6rem)" }}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    Global Intelligence.{" "}
+                   <span className="gradient-text"> Zero Privacy Compromise.</span>
+                  </motion.h1>
+          <p className="text-muted-foreground text-lg leading-relaxed mb-10">
             Raw patient data never leaves your servers — only encrypted weight gradients travel.
             The power of a global network. The privacy of a local vault.
-          </motion.p>
+          </p>
+        
+   
+
+        
         
         {/* ── Flow diagram row ── */}
         <motion.div
